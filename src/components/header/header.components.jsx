@@ -12,6 +12,9 @@ import { UPDATE_OPERATORS } from "@babel/types";
 import { selectCurrentUser } from "../../redux/user/user-selector";
 import { connect } from "react-redux";
 
+//materialUi
+import { Avatar } from "@material-ui/core";
+
 
 
 const Header = ({currentUser}) => {
@@ -40,7 +43,8 @@ const Header = ({currentUser}) => {
     });
   };
   return (
-    <div className="header">
+    <div className='headerBackground'>
+       <div className="header">
       <div className="logoContainer">
         <h2>SocioClan</h2>
       </div>
@@ -72,13 +76,15 @@ const Header = ({currentUser}) => {
         {hidden ? null : <UploadToDatabase image={img} filename={filesName} />}
 
         {
-          currentUser?currentUser.avatar?<img src={currentUser.avatar} className='avatar option'></img>:null:null
+          currentUser?currentUser.avatar?<Avatar alt={currentUser.displayName} src={currentUser.avatar} className="avatar"/>: <Avatar src="/broken-image.jpg" className="avatar" alt={currentUser.avatar}/>:null
 
           // currentUser?<img src={currentUser.avatar} className='avatar option'></img>:null
         }
         
       </div>
     </div>
+    </div>
+   
   );
 };
 

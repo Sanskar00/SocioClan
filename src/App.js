@@ -22,8 +22,9 @@ import React from "react";
 
 //Components
 import Header from "./components/header/header.components";
-import SignUp from "./components/sign-up/sign-up";
-import SignIn from "./components/SignIn/sign-in";
+import SignIn from "./page/SignIn/sign-in";
+import SignUp from "./page/sign-up/sign-up";
+import Home from "./page/Home/home";
 
 //redux
 import { setCurrentUser } from "./redux/user/user.action";
@@ -68,6 +69,7 @@ class App extends Component {
         <div className="App">
           <Header />
           <Switch>
+          <Route exact path="/" component={Home}></Route>
             <Route path="/signUp" component={SignUp}></Route>
             <Route path="/signIn" component={SignIn}></Route>
           </Switch>

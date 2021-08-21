@@ -41,6 +41,7 @@ export const createUserProfileDocument = async (user, additionalData) => {
   return userRef
 
 };
+ 
 
 
 //Initialize Firebase

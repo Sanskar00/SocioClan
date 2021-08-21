@@ -1,10 +1,15 @@
-.header{
+.headerBackground{
+    background-color: white;
+    border-bottom: 0.5px groove black;
     height: 70px;
-    width: 75%;
+    margin-bottom: 25px;
+.header{
+  
+    width: 50%;
     display: flex;
     margin: auto;
     justify-content: space-between;
-    margin-bottom: 25px;
+
     .logo-container{
         height: 100%;
         width: 70px;
@@ -19,7 +24,7 @@
         align-items: center;
         
         .option{
-            margin: 10px,15px;
+            margin: 10px,20px;
             cursor: pointer;
             align-content: center;
             padding: 5px 10px;
@@ -41,9 +46,7 @@
 
         }
         .avatar{
-            border-radius: 50%;
-            height:40px;
-            width: 40px;
+            margin: 10px,
         }
 
     }
@@ -67,3 +70,4 @@
     
     
 }    
+}
