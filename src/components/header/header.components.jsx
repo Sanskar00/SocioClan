@@ -46,7 +46,7 @@ const Header = ({currentUser}) => {
     <div className='headerBackground'>
        <div className="header">
       <div className="logoContainer">
-        <h2>SocioClan</h2>
+        <Link to="/"><h2>SocioClan</h2></Link>
       </div>
       <div className={`${hidden ? "options" : "optionsPointerDisable"}`}>
         <Link to="/signUp" className="option">

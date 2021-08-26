@@ -40,20 +40,22 @@ const UploadToDatabase = (props) => {
                     avatar: avatar,
                     image: image,
                     filename: filename,
-                    like:0
+                    uuid:create_UUID(),
+                    uid:uid
 
                 }]
             })
         }
-        userPosts.update({
+      else{  userPosts.update({
             userPost: firebase.firestore.FieldValue.arrayUnion({
                 displayName: displayName,
                 avatar: avatar,
                 image: image,
                 filename: filename,
-                like:0
+                uuid:create_UUID(),
+                uid:uid
             })
-        })
+        })}
 
 
     }

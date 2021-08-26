@@ -27,7 +27,8 @@ const SignUp = () => {
     event.preventDefault();
     const { email, password } = userCredentias;
     const { user } = await auth.createUserWithEmailAndPassword(email, password); //for sign up using email and password
-    await createUserProfileDocument(user, { displayName, avatar });
+    const {uid}=user
+    await createUserProfileDocument(user, { displayName, avatar ,uid});
   };    
   const fileHander = async (event) => {
     const file = event.target.files[0];
