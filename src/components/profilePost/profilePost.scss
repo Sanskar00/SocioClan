@@ -1,0 +1,17 @@
+.postItem{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    .image{
+        height: 300px;
+        width: 300px;
+        margin: 2px;
+    }
+    .likeComments{
+        display: none;
+        width: 200px;
+        padding:5px;
+        align-self: center;
+        position: absolute;
+    }
+}

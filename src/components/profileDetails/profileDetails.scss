@@ -1,0 +1,23 @@
+.profileContainer{
+    height: auto;
+    width: 100%;
+    display: flex;
+    margin: auto;
+    // justify-content: space-between;
+    margin-bottom: 25px;
+    .image{
+        display: flex;
+        justify-content: flex-start;
+        height:auto;
+        width:75%;
+    }
+    .userName{
+        font-weight: lighter;
+    }
+    h3{
+        font-weight: lighter;
+    }
+    .displayName{
+        font-weight: bold;
+    }
+}
