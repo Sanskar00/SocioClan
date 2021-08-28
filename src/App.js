@@ -28,6 +28,7 @@ import Home from "./page/Home/home";
 
 //redux
 import { setCurrentUser } from "./redux/user/user.action";
+import ProfilePage from "./page/ProfilePage/profilePage";
 
 class App extends Component {
   constructor() {
@@ -72,6 +73,7 @@ class App extends Component {
           <Route exact path="/" component={Home}></Route>
             <Route path="/signUp" component={SignUp}></Route>
             <Route path="/signIn" component={SignIn}></Route>
+            <Route path="/:id" component={ProfilePage}/>
           </Switch>
         </div>
       </Router>

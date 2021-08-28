@@ -6,7 +6,6 @@ import { Form, InputLabel, Input } from "@material-ui/core";
 import {
   auth,
   createUserProfileDocument,
-  fileHander,
   storage,
 } from "../../firebase/firebase";
 

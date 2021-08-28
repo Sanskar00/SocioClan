@@ -25,11 +25,12 @@ import { useEffect } from 'react';
 import { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import { ContactPhoneOutlined, FavoriteSharp } from '@material-ui/icons';
-import { InputAdornment, Link } from '@material-ui/core';
+import { InputAdornment } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import CommentBox from '../commentBox/commentBox';
 import { ChatBubbleOutlined } from '@material-ui/icons';
 import CommentDisplay from '../commentDisplay/commentDisplay'
+import { Link } from 'react-router-dom';
 
 const useStyles = (theme) => ({
     root: {
@@ -73,14 +74,15 @@ const useStyles = (theme) => ({
 });
 
 class HomePostsClass extends Component {
-    constructor() {
-        super();
+    constructor({currentUser}) {
+        super({currentUser});
         this.state = {
             favourite: false,
             expanded: false,
             postLikes: 0,
             postComments: [],
-            userLike:false
+            userLike:false,
+            user:currentUser
         }
     }
     handleExpandClick = () => {
@@ -98,10 +100,10 @@ class HomePostsClass extends Component {
         try {
             if (!likesSnapshot.exists) {
                 likesDoc.set({
-                    userLikes: {
+                    userLikes: [{
                         displayName: currentUser.displayName,
                         avatar: currentUser.avatar
-                    }
+                    }]
                 }).then(() => (this.setState({ favourite: true })))
             }
             else {
@@ -149,9 +151,8 @@ class HomePostsClass extends Component {
                 const userLikesArray = likesSnapshot.data().userLikes
                 userLikesArray.map(k=>{
                    try{ 
-                    const {currentUser}=this.props
-                    if(k.displayName==currentUser.displayName){
-                        this.setState({userLike:true})
+                    if(k.displayName==this.state.user.displayName){
+                      this.setState({userLike:true})
                     }
                     else{
                         this.setState({userLike:false})
@@ -171,7 +172,7 @@ class HomePostsClass extends Component {
         const { classes, userPosts } = this.props
 
 
-        const { displayName, avatar, image,uuid } = userPosts
+        const { displayName, avatar, image,uuid,uid } = userPosts
         return (
             <Card className={classes.root}>
                 <CardHeader
@@ -183,7 +184,7 @@ class HomePostsClass extends Component {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={<Link>{displayName}</Link>}
+                    title={<Link to={`/${uid}`}>{displayName}</Link>}
                 />
                 <CardMedia
                     // style={{

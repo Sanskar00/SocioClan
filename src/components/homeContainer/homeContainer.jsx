@@ -9,11 +9,11 @@ export default function SimpleContainer({posts}) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="md">
+      <Container style={{width:"50%"}}>
           {
               posts.map(post=>(
                 // <HomePosts userPosts={post}></HomePosts>
-                <HomePostsClass userPosts={post}></HomePostsClass>
+                <HomePostsClass userPosts={post} key={post.uuid}></HomePostsClass>
               ))
           }
         

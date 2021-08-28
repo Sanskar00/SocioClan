@@ -19,7 +19,6 @@ class Home extends Component {
             snapshot.docs.map(doc => {
                 doc.data().userPost.map(post => {
                     this.setState({ allPosts: [...this.state.allPosts, post] })
-                    console.log(this.state.allPosts)
                 })
             })
         })
