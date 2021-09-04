@@ -29,8 +29,9 @@ const useStyles = ((theme) => ({
 }));
 
 class ProfileDetails extends Component {
-    constructor({ uid }) {
-        super({ uid });
+    constructor(props) {
+        super(props);
+        const {uid}=this.props
         this.state = {
             userUid: uid,
             profileDetails: {},

@@ -4,8 +4,9 @@ import ProfilePostContainer from '../../components/profilePostContainer/profileP
 import { firestore } from '../../firebase/firebase';
 
 class ProfilePage extends Component {
-    constructor({ match }) {
-        super({ match });
+    constructor(props) {
+        super(props);
+        const {match}=this.props
         this.state = {
             id: match.params.id,
             profilePosts: [],

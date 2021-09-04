@@ -66,14 +66,14 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router>  
         <div className="App">
           <Header />
           <Switch>
-          <Route exact path="/" component={Home}></Route>
+            <Route exact path="/" component={Home}></Route>
             <Route path="/signUp" component={SignUp}></Route>
             <Route path="/signIn" component={SignIn}></Route>
-            <Route path="/:id" component={ProfilePage}/>
+            <Route path="/:id" component={ProfilePage} />
           </Switch>
         </div>
       </Router>

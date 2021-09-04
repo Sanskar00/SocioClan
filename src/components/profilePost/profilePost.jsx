@@ -12,7 +12,11 @@ import LikeCommentHover from '../likeCommentHover/likeCommentHover';
 import PostImage from '../posrImage/postImage';
 import './profilePost.scss'
 import { useState } from 'react';
-import postDetailsModal from '../postDetailsModal/postDetailsModal';
+import PostDetailsModal from '../postDetailsModal/postDetailsModal';
+import { setModalStatus } from '../../redux/profilePost/profilePost.action';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectModalStatus } from '../../redux/profilePost/profile-selctor';
 
 
 /**
@@ -32,21 +36,31 @@ import postDetailsModal from '../postDetailsModal/postDetailsModal';
  *   },
  * ];
  */
-export default function ProfilePosts({ profilePosts }) {
+const ProfilePosts=({ profilePosts,modalStatus,setModalStatus})=> {
   const [open,setOpen]=useState(false)
-  const handleOpen=()=>{
-    setOpen(true)
-  }
+  const [postImage,setPostImage]=useState(null)
+  // const handleOpen=(event)=>{
+  //   setOpen(true)
+  //   setModalStatus(open)
+  //   console.log(open)
+  //   console.log(modalStatus)
+  //   setPostImage(event.target.src)
+  //   console.log(postImage)
+
+  // }
     return (
         <div >
 
             <div className='postItem' >
               {
                 profilePosts.map(post=>(
-                  <div >
-                    <img src={post.image} className='image' onClick={handleOpen} ></img>
-                    <LikeCommentHover post={post} className='likeComments' ></LikeCommentHover>
-                    <postDetailsModal open={open}></postDetailsModal>
+                  <div key={post.uuid}>
+                    {/* <img src={post.image} className='image' onClick={handleOpen} alt={post.uuid}></img> */}
+                    <PostImage post={post}></PostImage>
+                    <LikeCommentHover post={post}></LikeCommentHover>
+                   
+
+                   
                   </div>
                   
                 ))
@@ -57,3 +71,10 @@ export default function ProfilePosts({ profilePosts }) {
         </div>
     );
 }
+const mapdispatchToProps=dispatch=>({
+  setModalStatus:(modalStatus) => dispatch(setModalStatus(modalStatus))
+})
+const mapStateToProps=state=>({
+  modalStatus:selectModalStatus
+})
+export default connect(mapStateToProps,mapdispatchToProps)(ProfilePosts)

@@ -43,9 +43,7 @@ const CommentBox = ({ currentUser, uuid }) => {
         if (!commentSnapshot.exists) {
             commentRef.set({
                 userComments: [{
-
-                    displayName: currentUser.displayName,
-                    avatar: currentUser.avatar,
+                    userUid:currentUser.uid,
                     comment: comment
                 }]
 
@@ -54,8 +52,7 @@ const CommentBox = ({ currentUser, uuid }) => {
         else {
             commentRef.update({
                 userComments: firebase.firestore.FieldValue.arrayUnion({
-                    displayName: currentUser.displayName,
-                    avatar: currentUser.avatar,
+                    userUid:currentUser.uid,
                     comment: comment
                 })
             })

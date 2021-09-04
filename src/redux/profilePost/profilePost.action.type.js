@@ -1,0 +1,5 @@
+export const ProfilePostTypes={
+    SET_MODAL_SATATUS:'SET_MODAL_SATATUS',
+    SET_POST_IMAGE:'SET_POST_IMAGE',
+    SET_POST_UUID:'SET_POST_UUID',
+}

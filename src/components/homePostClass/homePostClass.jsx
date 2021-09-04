@@ -31,6 +31,8 @@ import CommentBox from '../commentBox/commentBox';
 import { ChatBubbleOutlined } from '@material-ui/icons';
 import CommentDisplay from '../commentDisplay/commentDisplay'
 import { Link } from 'react-router-dom';
+import LikeDisplay from '../likeDisplay/likeDisplay';
+import LikeCountDisplay from '../likeCountDisplay/likeCountDisplay';
 
 const useStyles = (theme) => ({
     root: {
@@ -74,10 +76,11 @@ const useStyles = (theme) => ({
 });
 
 class HomePostsClass extends Component {
-    constructor({currentUser}) {
-        super({currentUser});
+    constructor(props) {
+        super(props);
+        const{currentUser}=this.props
         this.state = {
-            favourite: false,
+            favourite: true,
             expanded: false,
             postLikes: 0,
             postComments: [],
@@ -88,89 +91,12 @@ class HomePostsClass extends Component {
     handleExpandClick = () => {
         this.setState({ expanded: !this.state.expanded })
     }
-    handleFavourite = async (event) => {
-
-        const { currentUser, userPosts } = this.props
-        const { uuid, image } = userPosts
-        const { avatar, displayName } = currentUser
-
-
-        const likesDoc = firestore.collection('likes').doc(uuid)
-        const likesSnapshot = await likesDoc.get()
-        try {
-            if (!likesSnapshot.exists) {
-                likesDoc.set({
-                    userLikes: [{
-                        displayName: currentUser.displayName,
-                        avatar: currentUser.avatar
-                    }]
-                }).then(() => (this.setState({ favourite: true })))
-            }
-            else {
-                likesDoc.update({
-                    userLikes: firebase.firestore.FieldValue.arrayUnion({
-                        displayName: currentUser.displayName,
-                        avatar: currentUser.avatar
-                    })
-                }).then(() => (this.setState({ favourite: true })))
-            }
-        } catch (err) {
-            console.log("can't set like to db")
-        }
-        if (this.state.favourite == true) {
-            const userLikesArray = likesSnapshot.data().userLikes
-            if (likesSnapshot.exists) {
-                userLikesArray.map(k => {
-                    if (k.displayName == currentUser.displayName) {
-                        likesDoc.update({
-                            userLikes: firebase.firestore.FieldValue.arrayRemove(k)
-                        }).then(() => {this.setState({ favourite: false })})
-                    }
-                })
-            }
-        }
-    }
-    componentDidMount() {
-        const { userPosts } = this.props
-        const { uuid } = userPosts
-        const getUserLike = async () => {
-            const likesDoc = firestore.collection('likes').doc(uuid)
-            const likesSnapshot = await likesDoc.get()
-            if(likesSnapshot.exists){
-                this.setState({ postLikes: likesSnapshot.data().userLikes.length })
-            }
-        }
-        getUserLike()
-    
-        const setUserLike=async ()=>{
-          
-       
-            const likesDoc = firestore.collection('likes').doc(uuid)
-            const likesSnapshot = await likesDoc.get()
-            if(likesSnapshot.exists){
-                const userLikesArray = likesSnapshot.data().userLikes
-                userLikesArray.map(k=>{
-                   try{ 
-                    if(k.displayName==this.state.user.displayName){
-                      this.setState({userLike:true})
-                    }
-                    else{
-                        this.setState({userLike:false})
-                    }}catch{
-                        console.log("couldn't red a like icon")
-                    }
-                })
-            }
-
-        }
-        setUserLike()
-        
-
-    }
+   
+   
     
     render() {
         const { classes, userPosts } = this.props
-
+        const like=this.state.userLike
 
         const { displayName, avatar, image,uuid,uid } = userPosts
         return (
@@ -193,7 +119,6 @@ class HomePostsClass extends Component {
                     // }}
                     className={classes.media}
                     image={image}
-                    title="Paella dish"
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -201,7 +126,7 @@ class HomePostsClass extends Component {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">
-                        <FavoriteSharp onClick={this.handleFavourite} className={this.state.userLike?classes.favouriteRed:null} />
+                       <LikeDisplay uuid={uuid}></LikeDisplay>
                     </IconButton>
                     <IconButton aria-label="share">
                         <ShareIcon />
@@ -217,7 +142,7 @@ class HomePostsClass extends Component {
                         <ChatBubbleOutlined/>
                     </IconButton>
                 </CardActions>
-                <span className={classes.likeNo}>{this.state.postLikes}</span>
+                <LikeCountDisplay uuid={uuid} className={classes.likeNo}></LikeCountDisplay>
                 <CardContent>
                 <CommentBox uuid={uuid}></CommentBox>
 
