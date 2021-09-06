@@ -3,8 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import RecipeReviewCard from '../homePost/homePost';
-import HomePosts from '../homePost/homePost';
-import HomePostsClass from '../homePostClass/homePostClass';
+import HomePost from '../homePostClass/homePostClass';
 
 export default function SimpleContainer({posts}) {
   return (
@@ -14,7 +13,7 @@ export default function SimpleContainer({posts}) {
           {
               posts.map(post=>(
                 // <HomePosts userPosts={post}></HomePosts>
-                <HomePostsClass userPosts={post} key={post.uuid}></HomePostsClass>
+                <HomePost userPosts={post} key={post.uuid}></HomePost>
               ))
           }
         

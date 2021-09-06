@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Favorite } from '@material-ui/icons';
+import { Favorite, TurnedInTwoTone } from '@material-ui/icons';
 import { useState } from 'react';
 import { firestore } from '../../firebase/firebase';
 import firebase from 'firebase';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selector';
 import { connect } from 'react-redux';
+import { setLikeStatus } from '../../redux/profilePost/profilePost.action';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,10 +15,12 @@ const useStyles = makeStyles((theme) => ({
         display:'inline-bl'
     },
     favouriteLikes:{
-      color:'red'
+      color:'red',
+      cursor:'pointer'
+      
     }
   }));
-const LikeDisplay=({currentUser,uuid})=>{
+const LikeDisplay=({currentUser,uuid,setLikeStatus})=>{
     const classes=useStyles()
     const [favourite, setFavourite] = useState(false)
     const [user,setUser]=useState(null)
@@ -34,14 +37,14 @@ const LikeDisplay=({currentUser,uuid})=>{
             userLikes: [{
                 userUid:currentUser.uid
             }]
-          }).then(()=>(setFavourite(true)))
+          }).then(()=>(setFavourite(true),setLikeStatus(true)))
         }
         else {
           likesDoc.update({
             userLikes: firebase.firestore.FieldValue.arrayUnion({
                 userUid:currentUser.uid
             })
-          }).then(()=>(setFavourite(true)))}
+          }).then(()=>(setFavourite(true),setLikeStatus(true)))}
         }catch(err){
           console.log("can't set like to db")
         }
@@ -52,7 +55,7 @@ const LikeDisplay=({currentUser,uuid})=>{
               if(k.userUid==currentUser.uid){
                 likesDoc.update({
                   userLikes:firebase.firestore.FieldValue.arrayRemove(k)
-                }).then(()=>setFavourite(false))
+                }).then(()=>(setFavourite(false),setLikeStatus(false)))
               }
             })
           }
@@ -76,10 +79,10 @@ const LikeDisplay=({currentUser,uuid})=>{
                 //   }
                 if(currentUser){
                   if(k.userUid==currentUser.uid){
-                        setFavourite({userLike:true})   
+                        setFavourite(true)
                       }
-                      else{
-                          setFavourite({userLike:false})
+                      else if(k.userUid!==currentUser.uid){
+                          setFavourite(false)
                       }
                 }
               })
@@ -100,4 +103,7 @@ const LikeDisplay=({currentUser,uuid})=>{
 const mapStateToProps=createStructuredSelector({
     currentUser:selectCurrentUser,
 })
-export default connect(mapStateToProps)(LikeDisplay);
+const mapdispatchToProps=dispatch=>({
+  setLikeStatus:like=>dispatch(setLikeStatus(like))
+})
+export default connect(mapStateToProps,mapdispatchToProps)(LikeDisplay);

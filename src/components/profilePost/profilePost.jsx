@@ -54,10 +54,10 @@ const ProfilePosts=({ profilePosts,modalStatus,setModalStatus})=> {
             <div className='postItem' >
               {
                 profilePosts.map(post=>(
-                  <div key={post.uuid}>
+                  <div key={post.uuid} className='imgWrap'>
                     {/* <img src={post.image} className='image' onClick={handleOpen} alt={post.uuid}></img> */}
-                    <PostImage post={post}></PostImage>
-                    <LikeCommentHover post={post}></LikeCommentHover>
+                    <PostImage post={post} ></PostImage>
+                    <LikeCommentHover post={post} className='likeComments'></LikeCommentHover>
                    
 
                    

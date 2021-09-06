@@ -13,17 +13,23 @@ import { selectCurrentUser } from "../../redux/user/user-selector";
 import { connect } from "react-redux";
 
 //materialUi
-import { Avatar } from "@material-ui/core";
+import { Avatar, Grid, Paper } from "@material-ui/core";
+import SimpleMenu from "../menu/menu";
+import { setMenuStaus } from "../../redux/user/user.action";
 
 
 
-const Header = ({currentUser}) => {
+const Header = ({currentUser,setMenuStaus}) => {
   const [filesName, setFile] = useState("");
   const [img, setImage] = useState("");
   const [hidden, setHidden] = useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const refInput = useRef();
   const focus = () => {
     refInput.current.click();
+  };
+  const handleClickMenu = (event) => {
+    setMenuStaus(event.currentTarget)
   };
 
   const fileHander = async (event) => {
@@ -36,28 +42,19 @@ const Header = ({currentUser}) => {
     setHidden((hidden) => (hidden = !hidden));
   };
 
-  const loggedOut = async (event) => {
-    event.preventDefault();
-    auth.signOut().then(() => {
-      console.log("userSignedOut");
-    });
-  };
+ 
   return (
-    <div className='headerBackground'>
+    <Grid>
+      <Paper elevation={2}>
+      <div className='headerBackground'>
        <div className="header">
       <div className="logoContainer">
         <Link to="/"><h2>SocioClan</h2></Link>
       </div>
       <div className={`${hidden ? "options" : "optionsPointerDisable"}`}>
-        <Link to="/signUp" className="option">
-          Sign Up
-        </Link>
-        <Link to="/signIn" className="option">
-          Sign In
-        </Link>
-        <span className="option" onClick={loggedOut}>
+        {/* <span className="option" onClick={loggedOut}>
           Log Out
-        </span>
+        </span> */}
         <form onSubmit={onsubmit}>
           <input
             style={{ display: "none" }}
@@ -76,14 +73,20 @@ const Header = ({currentUser}) => {
         {hidden ? null : <UploadToDatabase image={img} filename={filesName} />}
 
         {
-          currentUser?currentUser.avatar?<Avatar alt={currentUser.displayName} src={currentUser.avatar} className="avatar"/>: <Avatar src="/broken-image.jpg" className="avatar" alt={currentUser.avatar}/>:null
+          currentUser?currentUser.avatar?
+          <Avatar alt={currentUser.displayName} src={currentUser.avatar} className="avatar" onClick={handleClickMenu}/>
+          : <Avatar src="/broken-image.jpg" className="avatar" alt={currentUser.avatar} onClick={handleClickMenu}/>:null
 
           // currentUser?<img src={currentUser.avatar} className='avatar option'></img>:null
         }
+        <SimpleMenu menuPops={anchorEl}></SimpleMenu>
         
       </div>
     </div>
     </div>
+      </Paper>
+    </Grid>
+    
    
   );
 };
@@ -91,4 +94,7 @@ const Header = ({currentUser}) => {
 const mapStateToProps=createStructuredSelector({
   currentUser:selectCurrentUser
 })
-export default connect(mapStateToProps)(Header);
+const mapdispatchToProps=dispatch=>({
+  setMenuStaus:menu=>dispatch((setMenuStaus(menu)))
+})
+export default connect(mapStateToProps,mapdispatchToProps)(Header);

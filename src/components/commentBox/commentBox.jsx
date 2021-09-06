@@ -17,9 +17,6 @@ import { setCurrentUser } from '../../redux/user/user.action';
 import firebase from 'firebase';
 import { Component } from 'react';
 const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
     small: {
         width: theme.spacing(3),
         height: theme.spacing(3),
@@ -66,11 +63,13 @@ const CommentBox = ({ currentUser, uuid }) => {
 
             <TextField
                 id="filled-full-width"
-                style={{ margin: 8 }}
+                multiline
+                
                 placeholder="Add a comment..."
                 fullWidth
                 onChange={onCommentChange}
                 margin="normal"
+                variant="outlined"
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">

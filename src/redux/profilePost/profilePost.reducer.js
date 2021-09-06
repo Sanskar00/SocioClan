@@ -22,6 +22,11 @@ const profilePostReducer=(state = INTIAL_STATE, action) => {
                 ...state,
                 postUuid:action.payload
             }
+        case ProfilePostTypes.SET_LIKE_STATUS:
+            return{
+                ...state,
+                like:action.payload
+            }
         default:
             return state;
 

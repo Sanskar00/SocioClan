@@ -1,6 +1,6 @@
 import React from 'react';
 import './postDetailsModal.scss'
-import { Avatar, CardMedia, Modal } from '@material-ui/core';
+import { Avatar, Box, CardMedia, IconButton, Modal } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Component } from 'react';
@@ -17,6 +17,8 @@ import { firestore } from '../../firebase/firebase';
 import profileDetails from '../profileDetails/profileDetails';
 import CommentDisplay from '../commentDisplay/commentDisplay';
 import CommentBox from '../commentBox/commentBox';
+import { ChatBubbleOutlined, ChatOutlined } from '@material-ui/icons';
+import LikeCountDisplay from '../likeCountDisplay/likeCountDisplay';
 
 const useStyles = ((theme) => ({
   modal: {
@@ -42,9 +44,14 @@ const useStyles = ((theme) => ({
     height: theme.spacing(4),
   },
   rootDetails: {
-    width: '300px'
+    // postion:'absolute',
+
+    width: '300px',
+    height: 'auto',
+    flexDirection: 'coloumn'
   },
   profileDetails: {
+
     display: 'flex',
     margin: '10px',
     borderBottom: '1px inset black',
@@ -59,8 +66,13 @@ const useStyles = ((theme) => ({
     padding: '5px'
   },
   likeCommentDetails: {
-    marginTop:'auto'
-  }
+    position: 'absolute',
+    bottom: '0'
+  },
+  likeCount:{
+    marginLeft:'30px',
+  },
+
 }));
 class PostDetailsModal extends Component {
   constructor() {
@@ -106,23 +118,33 @@ class PostDetailsModal extends Component {
                 className={classes.media}
                 image={postImage}
               />
-              <div className={classes.rootDetails}>
-                <div className={classes.profileDetails} >
+              <div className='rootDetails'>
+                <div className='profileDetails'>
                   {profileDetails ? <Avatar src={profileDetails.avatar} className={classes.small}></Avatar> : null}
-                  {profileDetails ? <span className={classes.displayName}>{profileDetails.displayName}</span> : null}
+                  {profileDetails ? <span className='displayName'>{profileDetails.displayName}</span> : null}
+
                 </div>
                 <CommentDisplay uuid={uuid}></CommentDisplay>
+                <Box className='likeCommentsDetails'>
+                  <div className='likeCommentButtons' >
+                    <IconButton aria-label="add to favorites">
+                      <LikeDisplay uuid={uuid}></LikeDisplay>
+                    </IconButton>
+                    <IconButton>
+                      <ChatBubbleOutlined></ChatBubbleOutlined>
+                    </IconButton>
 
-                <div className={classes.likeCommentDetails}>
-                  <div >
-                    <LikeDisplay uuid={uuid}></LikeDisplay>
                   </div>
-                  <div className={classes.commentBox}>
+                  <div className={classes.likeCount}>
+                  <LikeCountDisplay uuid={uuid}/>
+                  </div>
+                  
+                  <div className='commentsBox'>
                     <CommentBox uuid={uuid}></CommentBox>
                   </div>
+                  
 
-                </div>
-
+                </Box>
               </div>
 
             </div>

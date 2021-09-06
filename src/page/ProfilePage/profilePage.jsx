@@ -16,10 +16,11 @@ class ProfilePage extends Component {
         const getUserPOst = async () => {
             const userPosts = firestore.collection('posts').doc(this.state.id)
             const userPostsSnapshot = await userPosts.get()
+            if(userPostsSnapshot.exists){
             const userPostsSnapshotArray=userPostsSnapshot.data().userPost
             userPostsSnapshotArray.map(p=>{
                 this.setState({profilePosts:[...this.state.profilePosts,p]})
-            })
+            })}
         }
         getUserPOst()
 

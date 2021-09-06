@@ -2,16 +2,25 @@
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    .image{
-        height: 300px;
-        width: 300px;
-        margin: 2px;
+    .imgWrap{
+        position: relative;
+        .likeComments{
+            width:80%;
+            position: absolute;
+            top:150px;
+            display: none;
+            margin-left: 100px;
+            font-weight: bolder;
+    
+    
+            /* transition effect. not necessary */
+            transition: opacity .2s, visibility .2s;
+        }
+        &:hover{
+            .likeComments{
+              display: flex;
+            }
     }
-    .likeComments{
-        display: none;
-        width: 200px;
-        padding:5px;
-        align-self: center;
-        position: absolute;
-    }
+}
+    
 }

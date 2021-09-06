@@ -25,7 +25,7 @@ import { useEffect } from 'react';
 import { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import { ContactPhoneOutlined, FavoriteSharp } from '@material-ui/icons';
-import { InputAdornment } from '@material-ui/core';
+import { Box, InputAdornment } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import CommentBox from '../commentBox/commentBox';
 import { ChatBubbleOutlined } from '@material-ui/icons';
@@ -33,10 +33,12 @@ import CommentDisplay from '../commentDisplay/commentDisplay'
 import { Link } from 'react-router-dom';
 import LikeDisplay from '../likeDisplay/likeDisplay';
 import LikeCountDisplay from '../likeCountDisplay/likeCountDisplay';
+import { Skeleton } from '@material-ui/lab';
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%'
+        width: '100%',
+        margin: '5px'
     },
     media: {
         height: 0,
@@ -58,7 +60,10 @@ const useStyles = (theme) => ({
         color: 'red'
     },
     likeNo: {
-        marginLeft: "30px"
+        marginLeft: "30px",
+        width: '20px',
+        display: 'flex',
+        justifyContent: 'space-between'
     },
     small: {
         width: '25px',
@@ -70,93 +75,79 @@ const useStyles = (theme) => ({
         flexWrap: 'wrap',
 
     },
-    favouriteRed:{
-        color:'red'
+    favouriteRed: {
+        color: 'red'
+    },
+    spanLike: {
+        marginLeft: '3px'
+    },
+    commentsField:{
+        margin:theme.spacing(1)
     }
-});
+}));
 
-class HomePostsClass extends Component {
-    constructor(props) {
-        super(props);
-        const{currentUser}=this.props
-        this.state = {
-            favourite: true,
-            expanded: false,
-            postLikes: 0,
-            postComments: [],
-            userLike:false,
-            user:currentUser
-        }
+const HomePost = ({ currentUser, userPosts }) => {
+    const [expanded, setExpanded] = useState(false);
+    const handleExpandClick = () => {
+        setExpanded(!expanded)
     }
-    handleExpandClick = () => {
-        this.setState({ expanded: !this.state.expanded })
-    }
-   
-   
-    
-    render() {
-        const { classes, userPosts } = this.props
-        const like=this.state.userLike
+    const classes=useStyles()
 
-        const { displayName, avatar, image,uuid,uid } = userPosts
-        return (
-            <Card className={classes.root}>
-                <CardHeader
-                    avatar={
-                        <Avatar src={avatar} />
-                    }
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title={<Link to={`/${uid}`}>{displayName}</Link>}
-                />
-                <CardMedia
-                    // style={{
-                    //     height: 0,
-                    //     paddingTop: '56.25%'
-                    // }}
+    const { displayName, avatar, image, uuid, uid } = userPosts
+    return (
+        <Card className={classes.root} elevation={2} >
+            <CardHeader
+                avatar={
+                    <Avatar src={avatar} />
+                }
+                action={
+                    <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                    </IconButton>
+                }
+                title={<Link to={`/${uid}`}>{displayName}</Link>}
+            />{image ?
+                (<CardMedia
                     className={classes.media}
                     image={image}
-                />
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                       <LikeDisplay uuid={uuid}></LikeDisplay>
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
-                    <IconButton
-                        className={clsx(classes.expand, {
-                            [classes.expandOpen]: this.state.expanded,
-                        })}
-                        onClick={this.handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="show more"
-                    >
-                        <ChatBubbleOutlined/>
-                    </IconButton>
-                </CardActions>
-                <LikeCountDisplay uuid={uuid} className={classes.likeNo}></LikeCountDisplay>
-                <CardContent>
-                <CommentBox uuid={uuid}></CommentBox>
+                />) : (<Skeleton animation="wave" className={classes.media} />)}
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                    <LikeDisplay uuid={uuid}></LikeDisplay>
+                </IconButton>
+                <IconButton
+                    className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                    })}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                >
+                    <ChatBubbleOutlined />
+                </IconButton>
+            </CardActions>
+            <Box className={classes.likeNo}>
+                <LikeCountDisplay uuid={uuid} ></LikeCountDisplay>
+            </Box>
 
-                </CardContent>
-                
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CommentDisplay uuid={uuid}></CommentDisplay>
+            <CardContent>
+                <CommentBox uuid={uuid} className={classes.commentsField}></CommentBox>
 
-                </Collapse>
-            </Card>
-        )
-    }
+            </CardContent>
+
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CommentDisplay key={uuid} uuid={uuid}></CommentDisplay>
+
+            </Collapse>
+        </Card>
+    )
 }
+
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser
 })
-export default connect(mapStateToProps)(withStyles(useStyles, { withTheme: true })(HomePostsClass))
+export default connect(mapStateToProps)(HomePost)

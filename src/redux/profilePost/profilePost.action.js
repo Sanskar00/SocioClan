@@ -12,3 +12,8 @@ export const setPostUuid=uuid=>({
     type:ProfilePostTypes.SET_POST_UUID,
     payload:uuid
 })
+
+export const setLikeStatus=like=>({
+    type:ProfilePostTypes.SET_LIKE_STATUS,
+    payload:like
+})

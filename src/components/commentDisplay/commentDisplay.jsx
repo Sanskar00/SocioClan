@@ -6,6 +6,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/styles';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { setModalStatus } from '../../redux/profilePost/profilePost.action';
+import { connect } from 'react-redux';
+
 const useStyles = (theme) => ({
     small: {
         width: '25px',
@@ -25,6 +29,10 @@ class CommentDisplay extends Component {
             postComments: [],
             userData:null
         }
+    }
+    handleClikDisplayName=()=>{
+        const {setModalStatus}=this.props
+        setModalStatus(false)
     }
     componentDidMount() {
         const { uuid } = this.props
@@ -59,7 +67,7 @@ class CommentDisplay extends Component {
                     this.state.postComments.map(c => (
                         <div className={classes.comments}>
                            {userData?<Avatar className={classes.small} src={userData.avatar}></Avatar>:null}
-                            {userData?<span style={{ fontWeight: 'bold' }}>{userData.displayName}</span>:null}
+                            {userData?<Link to={`/${userData.uid}`}><span style={{ fontWeight: 'bold' }} onClick={this.handleClikDisplayName}>{userData.displayName}</span></Link>:null}
                             <Typography style={{ marginLeft: '10px' }} variant="subtitle2" gutterBottom>
                                 {c.comment}
                             </Typography>
@@ -73,7 +81,10 @@ class CommentDisplay extends Component {
         )
     }
 }
-export default withStyles(useStyles, { withTheme: true })(CommentDisplay);
+const mapdispatchToProps=dispatch=>({
+    setModalStatus:modal=>dispatch(setModalStatus(modal))
+})
+export default connect(null,mapdispatchToProps)(withStyles(useStyles, { withTheme: true })(CommentDisplay));
 // const CommentDisplay=(uuid)=>{
 //     const [postComments,setPostComments]=useState([])
 

@@ -1,9 +1,7 @@
 import { UserActionTypes } from "./user.actionType";
 const INTIAL_STATE = {
     currentUser: null,
-    modalStatus: false,
-    postImage:null,
-    postUuid:null
+    menuStatus:null
 }
 
 const userReducer = (state = INTIAL_STATE, action) => {
@@ -12,6 +10,11 @@ const userReducer = (state = INTIAL_STATE, action) => {
             return {
                 ...state,
                 currentUser: action.payload
+            }
+        case UserActionTypes.SET_MENU_STATUS:
+            return{
+                ...state,
+                menuStatus:action.payload
             }
         // case UserActionTypes.SET_MODAL_SATATUS:
         //     return {

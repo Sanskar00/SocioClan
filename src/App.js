@@ -29,7 +29,24 @@ import Home from "./page/Home/home";
 //redux
 import { setCurrentUser } from "./redux/user/user.action";
 import ProfilePage from "./page/ProfilePage/profilePage";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "./redux/user/user-selector";
+import { CircularProgress } from "@material-ui/core";
+import { withTheme } from "@material-ui/core";
+import { withStyles } from "@material-ui/styles";
+import { classes } from "istanbul-lib-coverage";
 
+const useStyles = (theme) => ({
+  root: {
+    diplay: 'flex',
+
+  },
+  spinner: {
+    top: '50%',
+    bottom: '50%',
+    postion: 'fixed'
+  }
+})
 class App extends Component {
   constructor() {
     super();
@@ -39,6 +56,7 @@ class App extends Component {
       files: {},
     };
   }
+
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
@@ -65,23 +83,47 @@ class App extends Component {
   // fetching post from firestore data base
 
   render() {
-    return (
-      <Router>  
-        <div className="App">
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Home}></Route>
-            <Route path="/signUp" component={SignUp}></Route>
-            <Route path="/signIn" component={SignIn}></Route>
-            <Route path="/:id" component={ProfilePage} />
-          </Switch>
-        </div>
-      </Router>
-    );
+    const { currentUser } = this.props
+    const { classes } = this.props
+    if (currentUser) {
+      return (
+        <Router>
+          <div className="App">
+            <Header />
+            <Switch>
+
+              <Route exact path="/" component={Home}></Route>
+              <Route path="/signIn" component={SignIn}></Route>
+              <Route path="/signUp" component={SignUp}></Route>
+              <Route path="/:id" render={(props) => (
+                <ProfilePage key={props.match.params.id} {...props} />
+              )} />
+            </Switch>
+          </div>
+        </Router>
+      )
+    }
+    else if (!currentUser) {
+      return (
+        <Router>
+
+          <div className="SignIn">
+            <Switch>
+              <Route path="/signIn" component={SignIn}></Route>
+              <Route path="/signUp" component={SignUp}></Route>
+            </Switch>
+          </div>
+        </Router>
+
+      )
+    }
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
-export default connect(null, mapDispatchToProps)(App);
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+})
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles, { withTheme: true })(App))

@@ -10,11 +10,13 @@ import { ReactComponent as ProfilePicture } from '/home/sanskar/SocioClan/SocioC
 const useStyles = ((theme) => ({
     root: {
         flexGrow: 1,
+        
     },
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
+        borderBottom:'1px  '
     },
     userName:{
         height:'25%'
@@ -26,6 +28,7 @@ const useStyles = ((theme) => ({
         paddingTop:'1px',
         
     }
+
 }));
 
 class ProfileDetails extends Component {
@@ -35,6 +38,7 @@ class ProfileDetails extends Component {
         this.state = {
             userUid: uid,
             profileDetails: {},
+            postCount:0
         }
     }
     componentDidMount() {
@@ -43,7 +47,7 @@ class ProfileDetails extends Component {
             const userSnapShot = await firestore.collection('users').doc(this.state.userUid).get()
             this.setState({ profileDetails: userSnapShot.data() })
             const postsSnapshot=await firestore.collection('posts').doc(this.state.userUid).get()
-            this.setState({postCount:postsSnapshot.data().userPost.length})
+            if(postsSnapshot.exists){this.setState({postCount:postsSnapshot.data().userPost.length})}
 
         }
         getProfileDetails()
@@ -56,7 +60,7 @@ class ProfileDetails extends Component {
         const { classes } = this.props
         return (
             <div className='profileContainer'>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} >
                     <Grid item xs={4}>
                         {this.state.profileDetails.avatar ?
                             <img className='image' style={{ borderRadius: '50%' }} src={this.state.profileDetails.avatar} />

@@ -6,6 +6,10 @@ export const selectCurrentUser=createSelector(
     [selectUser],
     (user)=>user.currentUser
 )
+export const selectMenuStatus=createSelector(
+    [selectUser],
+    (user)=>user.menuStatus
+)
 // export const selectModalStatus =createSelector(
 //     [selectUser],
 //     user=>user.modalStatus

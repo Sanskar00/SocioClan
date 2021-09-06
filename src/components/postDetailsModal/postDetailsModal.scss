@@ -1,5 +1,29 @@
-.modal{
-    display: flex;
-    align-items: center;
-    justify-content:center;
+.rootDetails{
+    width: 300px;
+    height: auto;
+    .profileDetails{
+        display:flex;
+        margin: 10px;
+        border-bottom: 1px inset black;
+        padding: 5px;
+        .displayName{
+            margin: 5px;
+        }
+    }
+    .likeCommentsDetails{
+        top: 250px;
+        .commentsBox{
+            border-top: 1px outset black;
+            padding: 5px;
+        }
+        .likeCommentButtons{
+            display: flex;
+            margin-left: 10px;
+            justify-content:2px;
+            padding: 5px;
+            border-top: 1px outset black;
+        }
+    }
+
+    
 }
