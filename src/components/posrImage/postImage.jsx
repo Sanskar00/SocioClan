@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectModalStatus } from '../../redux/profilePost/profile-selctor';
 import './postImage.scss'
+import { makeStyles } from '@material-ui/styles';
 
 const PostImage=(props)=>{
     const {post,setModalStatus,modalStatus,setPostImage,setPostUuid}=props
@@ -16,7 +17,7 @@ const PostImage=(props)=>{
     
       }
 return(<div>
-    <img src={post.image} alt={post.uuid} className='postImage' onClick={handleOpen}></img>
+    <img src={post.image} alt={post.uuid} className={'postImage'} onClick={handleOpen}></img>
     
     
 </div> 

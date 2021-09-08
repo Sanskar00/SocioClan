@@ -14,11 +14,12 @@ class Home extends Component {
         }
     }
     componentDidMount() {
-        const postsSnapshot = firestore.collection('posts').get()
+        const postsSnapshot = firestore.collection('posts').orderBy('userPost').get()
+        const postSortedArray=[]
         postsSnapshot.then(snapshot => {
             snapshot.docs.map(doc => {
                 doc.data().userPost.map(post => {
-                    this.setState({ allPosts: [...this.state.allPosts, post] })
+                    this.setState({ allPosts: [...this.state.allPosts, post].sort((a,b)=>b.createdAt-a.createdAt) })
                 })
             })
         })

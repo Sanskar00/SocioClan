@@ -109,7 +109,7 @@ class App extends Component {
 
           <div className="SignIn">
             <Switch>
-              <Route path="/signIn" component={SignIn}></Route>
+              <Route exact path="/signIn" component={SignIn}></Route>
               <Route path="/signUp" component={SignUp}></Route>
             </Switch>
           </div>

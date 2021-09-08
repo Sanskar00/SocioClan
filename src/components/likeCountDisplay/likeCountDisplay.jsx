@@ -12,7 +12,6 @@ import { selectModalStatus } from '../../redux/profilePost/profile-selctor';
 
 const LikeCount=({currentUser,uuid,like})=>{
     const [likeCount,setlikeCount]=useState(0)
-    const [userLike,setUserLike]=useState(like)
     const getUserLike = async () => {
         const likesDoc = firestore.collection('likes').doc(uuid)
         const likesSnapshot = await likesDoc.get()

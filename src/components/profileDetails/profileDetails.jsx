@@ -3,7 +3,10 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { classes } from 'istanbul-lib-coverage';
 import React from 'react';
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { firestore } from '../../firebase/firebase';
+import { selectCurrentUser } from '../../redux/user/user-selector';
 import './profileDetails.scss'
 import { ReactComponent as ProfilePicture } from '/home/sanskar/SocioClan/SocioClan/src/user-profile.svg'
 
@@ -57,15 +60,20 @@ class ProfileDetails extends Component {
     }
 
     render() {
-        const { classes } = this.props
+        const { classes,currentUser } = this.props
         return (
             <div className='profileContainer'>
-                <Grid container spacing={3} >
+                <Grid container >
                     <Grid item xs={4}>
                         {this.state.profileDetails.avatar ?
-                            <img className='image' style={{ borderRadius: '50%' }} src={this.state.profileDetails.avatar} />
-                            : <ProfilePicture className='image' />}
+                            <img className={
+                                (currentUser.uid==this.state.userUid)?'imageHover':'image'
+                            } src={this.state.profileDetails.avatar} />
+                            : <ProfilePicture className={
+                                (currentUser.uid==this.state.userUid)?'imageHover':'image'
+                            }></ProfilePicture>}
 
+                           
                     </Grid>
                     <Grid item xs={6}>
                         <Grid item xs={6} className={classes.userName}>
@@ -85,4 +93,7 @@ class ProfileDetails extends Component {
     }
 
 }
-export default withStyles(useStyles, { withTheme: true })(ProfileDetails)
+const mapStateToProps=createStructuredSelector({
+    currentUser:selectCurrentUser
+})
+export default connect(mapStateToProps)(withStyles(useStyles, { withTheme: true })(ProfileDetails))

@@ -17,6 +17,7 @@ import { setModalStatus } from '../../redux/profilePost/profilePost.action';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectModalStatus } from '../../redux/profilePost/profile-selctor';
+import HomePostClass from '../homePostClass/homePostClass';
 
 
 /**
@@ -51,21 +52,27 @@ const ProfilePosts=({ profilePosts,modalStatus,setModalStatus})=> {
     return (
         <div >
 
-            <div className='postItem' >
+            <Grid className='postItem' align='center' >
               {
                 profilePosts.map(post=>(
-                  <div key={post.uuid} className='imgWrap'>
+                  <div className='postContainer'>
+                     <div key={post.uuid} className='imgWrap'>
                     {/* <img src={post.image} className='image' onClick={handleOpen} alt={post.uuid}></img> */}
-                    <PostImage post={post} ></PostImage>
-                    <LikeCommentHover post={post} className='likeComments'></LikeCommentHover>
+                    <Grid >
+                      <PostImage post={post} ></PostImage>
+                      <LikeCommentHover post={post} className='likeComments'></LikeCommentHover>
+                    </Grid>
+                    
                    
 
                    
                   </div>
+                  </div>
+                 
                   
                 ))
               }
-            </div>
+            </Grid>
 
   
         </div>
@@ -74,7 +81,8 @@ const ProfilePosts=({ profilePosts,modalStatus,setModalStatus})=> {
 const mapdispatchToProps=dispatch=>({
   setModalStatus:(modalStatus) => dispatch(setModalStatus(modalStatus))
 })
-const mapStateToProps=state=>({
-  modalStatus:selectModalStatus
+const mapStateToProps=({profilePost})=>({
+  modalStatus:profilePost.modalStatus
 })
+
 export default connect(mapStateToProps,mapdispatchToProps)(ProfilePosts)

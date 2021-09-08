@@ -11,6 +11,10 @@
             display: none;
             margin-left: 100px;
             font-weight: bolder;
+            @media(max-width:800px){
+                top: 75px;
+                margin-left: 50px;
+            }
     
     
             /* transition effect. not necessary */

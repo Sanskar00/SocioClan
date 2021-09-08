@@ -5,16 +5,30 @@ import Container from '@material-ui/core/Container';
 import ProfilePosts from '../profilePost/profilePost';
 import ProfileDetails from '../profileDetails/profileDetails';
 import PostDetailsModal from '../postDetailsModal/postDetailsModal';
+import './profilePostContainer.scss'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import SmallScreenModal from '../smallScreenModal/smallScreenModal';
 
 
-const ProfilePostContainer = ({ profilePosts, uid }) => (
-    <React.Fragment>
+const ProfilePostContainer = ({ profilePosts, uid }) => {
+    const [matches,setMatches]=useState(
+        window.matchMedia("(max-width:800px)").matches
+    )
+    useEffect(()=>{
+        const handler=e=>setMatches(e.matches);
+        window.matchMedia("(max-width:800px)").addListener(handler)
+    })
+    return(<React.Fragment>
         <CssBaseline />
-        <Container style={{ width: "50%", paddingLeft: '100px' }}>
+        
+        <Container className='container'>
             <ProfileDetails uid={uid} profilePosts={profilePosts}></ProfileDetails>
-            <ProfilePosts profilePosts={profilePosts}></ProfilePosts>
-            <PostDetailsModal uid={uid}></PostDetailsModal>
+            <ProfilePosts profilePosts={profilePosts} ></ProfilePosts>
+            {!matches&&<PostDetailsModal uid={uid}></PostDetailsModal>}
+            {matches&&<SmallScreenModal></SmallScreenModal>}
+
         </Container>
-    </React.Fragment>
-)
+    </React.Fragment>)
+}
 export default ProfilePostContainer

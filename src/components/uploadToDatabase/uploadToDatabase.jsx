@@ -10,8 +10,9 @@ import { firestore } from '../../firebase/firebase';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selector';
 import { connect } from 'react-redux';
+import { setUploadStatus } from '../../redux/profilePost/profilePost.action';
 const UploadToDatabase = (props) => {
-    const { filename, image, currentUser } = props
+    const { filename, image, currentUser,setUploadStatus } = props
     const { displayName, avatar, uid } = currentUser
     console.log(filename)
     console.log(image)
@@ -29,9 +30,12 @@ const UploadToDatabase = (props) => {
     console.log(create_UUID())
     
 
+    const createdAt=new Date();
 
     const onsubmit = async (e) => {
         e.preventDefault()
+        setUploadStatus(true)
+
         const userPosts = firestore.collection('posts').doc(uid)
         const userPostSnapshot = await userPosts.get()
         if (!userPostSnapshot.exists) {
@@ -42,7 +46,8 @@ const UploadToDatabase = (props) => {
                     image: image,
                     filename: filename,
                     uuid:create_UUID(),
-                    uid:uid
+                    uid:uid,
+                    createdAt:createdAt
 
                 }]
             })
@@ -54,7 +59,8 @@ const UploadToDatabase = (props) => {
                 image: image,
                 filename: filename,
                 uuid:create_UUID(),
-                uid:uid
+                uid:uid,
+                createdAt:createdAt
             })
         })}
 
@@ -82,4 +88,7 @@ const UploadToDatabase = (props) => {
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser
 })
-export default connect(mapStateToProps)(UploadToDatabase)
+const mapdispatchToProps=dispatch=>({
+    setUploadStatus:uplaod=>dispatch(setUploadStatus(uplaod))
+})
+export default connect(mapStateToProps,mapdispatchToProps)(UploadToDatabase)

@@ -28,26 +28,18 @@ const SignIn = () => {
   }
   const paperStyle = {
     padding: '20px',
-    height: '50vh',
-    width: 400,
+    height: '60vh',
+    width: 450,
     margin: ' 100px auto'
   }
-  const textField={
+  const fieldAndButtonMargin={
     marginTop:'10%'
   }
   const brand={
     marginTop:'20%'
   }
-  const emailField={
-    marginTop:'10%'
-
-  }
-  const passwordField={
-    marginTop:'10%'
-  }
-  const loginButton={
-    marginTop:'10%'
-  }
+ 
+ 
   const signUp={
     color:'blue'
   }
@@ -62,11 +54,11 @@ const SignIn = () => {
             <Grid align='center' style={brand}>
               <h2>SocioClan</h2>
             </Grid>
-            <Grid style={textField}>
-              <TextField variant='outlined' name="email" label='Email' placeholder='Enter email' fullWidth style={emailField}  type="text" onChange={handleChange}></TextField>
-              <TextField variant='outlined' name="password" label='Passoword' placeholder='Enter password' fullWidth type='password' style={passwordField} onChange={handleChange}></TextField>
+            <Grid style={fieldAndButtonMargin}>
+              <TextField variant='outlined' name="email" label='Email' placeholder='Enter email' fullWidth style={fieldAndButtonMargin}  type="text" onChange={handleChange}></TextField>
+              <TextField variant='outlined' name="password" label='Passoword' placeholder='Enter password' fullWidth type='password' style={fieldAndButtonMargin} onChange={handleChange}></TextField>
             </Grid>
-            <Button variant='contained' type='submit' color='primary' fullWidth style={loginButton}>LogIn </Button>
+            <Button variant='contained' type='submit' color='primary' fullWidth style={fieldAndButtonMargin}>Sign In</Button>
             <h3 style={signUpText} align='center'>Don't have account?<Link style={signUp} to='/signUp'>SignUp</Link></h3>
             
 

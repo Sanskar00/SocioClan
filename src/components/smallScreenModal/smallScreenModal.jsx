@@ -1,5 +1,4 @@
 import React from 'react';
-import './postDetailsModal.scss'
 import { Avatar, Box, CardMedia, IconButton, Modal } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -19,13 +18,15 @@ import CommentDisplay from '../commentDisplay/commentDisplay';
 import CommentBox from '../commentBox/commentBox';
 import { ChatBubbleOutlined, ChatOutlined } from '@material-ui/icons';
 import LikeCountDisplay from '../likeCountDisplay/likeCountDisplay';
+import HomePostClass from '../homePostClass/homePostClass';
 
 const useStyles = ((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.1)'
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    width:'100%'
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -50,8 +51,8 @@ const useStyles = ((theme) => ({
   rootDetails: {
     // postion:'absolute',
 
-    width: '300px',
-    height: 'auto',
+    width: '100%',
+    height: '100%',
     flexDirection: 'coloumn'
   },
   profileDetails: {
@@ -78,7 +79,7 @@ const useStyles = ((theme) => ({
   },
 
 }));
-class PostDetailsModal extends Component {
+class SmallScreenModal extends Component {
   constructor() {
     super();
     this.state = {
@@ -101,6 +102,11 @@ class PostDetailsModal extends Component {
   render() {
     const { image, modalStatus, classes, postImage, uuid, uid } = this.props
     const { profileDetails } = this.state
+    const userPosts={
+        image:postImage,
+        uid:uid,
+        uuid:uuid
+    }
     return (
       <div>
 
@@ -118,39 +124,7 @@ class PostDetailsModal extends Component {
         >
           <Fade in={modalStatus}>
             <div className={classes.paper} >
-              <CardMedia
-                className={classes.media}
-                image={postImage}
-              />
-              <div className='rootDetails'>
-                <div className='profileDetails'>
-                  {profileDetails ? <Avatar src={profileDetails.avatar} className={classes.small}></Avatar> : null}
-                  {profileDetails ? <span className='displayName'>{profileDetails.displayName}</span> : null}
-
-                </div>
-                <CommentDisplay uuid={uuid}></CommentDisplay>
-                <Box className='likeCommentsDetails'>
-                  <div className='likeCommentButtons' >
-                    <IconButton aria-label="add to favorites">
-                      <LikeDisplay uuid={uuid}></LikeDisplay>
-                    </IconButton>
-                    <IconButton>
-                      <ChatBubbleOutlined></ChatBubbleOutlined>
-                    </IconButton>
-
-                  </div>
-                  <div className={classes.likeCount}>
-                  <LikeCountDisplay uuid={uuid}/>
-                  </div>
-                  
-                  <div className='commentsBox'>
-                    <CommentBox uuid={uuid}></CommentBox>
-                  </div>
-                  
-
-                </Box>
-              </div>
-
+                <HomePostClass userPosts={userPosts}></HomePostClass>
             </div>
           </Fade>
         </Modal>
@@ -167,4 +141,4 @@ const mapStateToProps = ({ profilePost, }) => ({
   uuid: profilePost.postUuid
 })
 
-export default connect(mapStateToProps, mapdispatchToProps)(withStyles(useStyles, { withTheme: true })(PostDetailsModal))
+export default connect(mapStateToProps, mapdispatchToProps)(withStyles(useStyles, { withTheme: true })(SmallScreenModal))

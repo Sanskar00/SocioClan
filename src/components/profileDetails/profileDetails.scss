@@ -12,7 +12,30 @@
         justify-content: flex-start;
         height:auto;
         width:75%;
+        border-radius: 50%;
     }
+    .imageHover{
+        display: flex;
+        justify-content: flex-start;
+        height:auto;
+        width:75%;
+        border-radius: 50%;
+        cursor: pointer;
+      
+ 
+                
+        }
+        .addButton{
+            position: absolute;
+            top:210px;
+            margin-left: 110px;
+            font-size: 50px;
+            display: none;
+
+    }
+
+   
+
     .userName{
         font-weight: lighter;
     }

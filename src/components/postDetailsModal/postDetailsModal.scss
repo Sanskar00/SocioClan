@@ -1,6 +1,9 @@
 .rootDetails{
     width: 300px;
     height: auto;
+    @media(max-width:800px){
+        width: 100px;
+    }
     .profileDetails{
         display:flex;
         margin: 10px;

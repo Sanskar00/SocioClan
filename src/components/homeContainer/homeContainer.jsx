@@ -4,12 +4,13 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import RecipeReviewCard from '../homePost/homePost';
 import HomePost from '../homePostClass/homePostClass';
+import './homeContainer.scss'
 
 export default function SimpleContainer({posts}) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container style={{width:"50%"}}>
+      <Container className='container'>
           {
               posts.map(post=>(
                 // <HomePosts userPosts={post}></HomePosts>

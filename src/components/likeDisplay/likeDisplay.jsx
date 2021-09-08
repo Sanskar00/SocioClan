@@ -12,7 +12,6 @@ import { setLikeStatus } from '../../redux/profilePost/profilePost.action';
 
 const useStyles = makeStyles((theme) => ({
     favouriteRoot:{
-        display:'inline-bl'
     },
     favouriteLikes:{
       color:'red',
