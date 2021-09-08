@@ -8,7 +8,7 @@ import { createStructuredSelector } from 'reselect';
 import { firestore } from '../../firebase/firebase';
 import { selectCurrentUser } from '../../redux/user/user-selector';
 import './profileDetails.scss'
-import { ReactComponent as ProfilePicture } from '/home/sanskar/SocioClan/SocioClan/src/user-profile.svg'
+
 
 const useStyles = ((theme) => ({
     root: {
