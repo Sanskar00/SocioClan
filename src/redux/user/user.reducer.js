@@ -16,22 +16,6 @@ const userReducer = (state = INTIAL_STATE, action) => {
                 ...state,
                 menuStatus:action.payload
             }
-        // case UserActionTypes.SET_MODAL_SATATUS:
-        //     return {
-        //         ...state,
-        //         modalStatus: action.payload
-        //     }
-        // case UserActionTypes.SET_POST_IMAGE:
-        //     return{
-        //         ...state,
-        //         postImage:action.payload
-        //     }
-        // case UserActionTypes.SET_POST_UUID:
-        //     return{
-        //         ...state,
-        //         postUuid:action.payload
-        //     }
-            
         default:
             return state;
 

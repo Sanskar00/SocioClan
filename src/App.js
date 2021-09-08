@@ -76,7 +76,6 @@ class App extends Component {
       changes.forEach((change) => {
         this.setState({ posts: [...this.state.posts, change.doc.data()] });
       });
-      console.log(this.state.posts);
     });
   }
 

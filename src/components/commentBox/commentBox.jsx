@@ -36,7 +36,6 @@ const CommentBox = ({ currentUser, uuid }) => {
     const submitComment = async(event) => {
         const commentRef = firestore.collection('comments').doc(uuid)
         const commentSnapshot = await commentRef.get()
-        console.log(commentSnapshot.exist)
         if (!commentSnapshot.exists) {
             commentRef.set({
                 userComments: [{

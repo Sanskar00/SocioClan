@@ -42,7 +42,6 @@ const UploadToDatabase = (props) => {
             userPosts.set({
                 userPost: [{
                     displayName: displayName,
-                    avatar: avatar,
                     image: image,
                     filename: filename,
                     uuid:create_UUID(),
@@ -50,19 +49,18 @@ const UploadToDatabase = (props) => {
                     createdAt:createdAt
 
                 }]
-            })
+            }).then(window.location.reload)
         }
       else{  userPosts.update({
             userPost: firebase.firestore.FieldValue.arrayUnion({
                 displayName: displayName,
-                avatar: avatar,
                 image: image,
                 filename: filename,
                 uuid:create_UUID(),
                 uid:uid,
                 createdAt:createdAt
             })
-        })}
+        }).then()}
 
 
     }

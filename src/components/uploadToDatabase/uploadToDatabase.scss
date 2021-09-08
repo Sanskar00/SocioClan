@@ -10,6 +10,12 @@
     pointer-events: auto;
     overflow: auto;
     background-color: rgba(0,0,0,0.5);
+    @media (max-width:800px) {
+        margin: 5px;
+        position: relative;
+        width: 25%;
+        height: 50%;
+    }
     .imageDiv{
     
         margin-bottom: auto;
@@ -20,8 +26,14 @@
             margin-bottom: auto 1px;
             width: 200px;
             height: 200px;
-            padding: 20px;
+            padding: 10px;
+            @media (max-width) {
+                width: 100px;
+                height: 100px;
+                padding: 5px;
+            }
         }
+        
 
     }
     
