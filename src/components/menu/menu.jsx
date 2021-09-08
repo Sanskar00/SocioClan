@@ -21,7 +21,7 @@ function SimpleMenu({menu,setMenuStaus,currentUser,setCurrentUser}) {
       await auth.signOut().then(() => {
         console.log("userSignedOut");
       });
-      history.push('/signIn')
+      history.push('/')
       setCurrentUser(null)
       setMenuStaus(null)
     };
@@ -42,7 +42,7 @@ function SimpleMenu({menu,setMenuStaus,currentUser,setCurrentUser}) {
           onClose={handleClose}
         >
           {(currentUser)?<MenuItem onClick={handleClose}><Link to={`/${currentUser.uid}`}>Profile</Link></MenuItem>:null}
-          {(currentUser)?<MenuItem onClick={loggedOut}><Link to='/signIn'>Logout</Link></MenuItem>:<MenuItem ></MenuItem>}
+          {(currentUser)?<MenuItem onClick={loggedOut}><Link to='/'>Logout</Link></MenuItem>:<MenuItem ></MenuItem>}
         </Menu>
       </div>
     );
