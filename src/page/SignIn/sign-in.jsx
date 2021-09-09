@@ -17,13 +17,15 @@ const SignIn = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserCredentials({ ...userCredentials, [name]: value })
-    console.log(value)
 
   }
   const login = async (event) => {
     event.preventDefault();
     const { user } = await auth.signInWithEmailAndPassword(email, password);//for signing with email and password
     history.push('/')
+    // if(!user){
+
+    // }
   }
   const paperStyle = {
     padding: '20px',

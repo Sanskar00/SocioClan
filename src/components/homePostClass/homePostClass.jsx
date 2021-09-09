@@ -28,7 +28,11 @@ import { Skeleton } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '75%',
-        marginLeft: '12.5%'
+        marginLeft: '12.5%',
+       [theme.breakpoints.down('sm')]:{
+           width:"100%",
+           margin:'0'
+       }
     },
     media: {
         height: 0,
