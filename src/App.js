@@ -54,6 +54,7 @@ class App extends Component {
       img: "",
       posts: [],
       files: {},
+      loading:true
     };
   }
 
@@ -68,14 +69,9 @@ class App extends Component {
             id: snapshot.id,
             ...snapshot.data(),
           });
+          this.setState({loading:false});
         });
       }
-    });
-    firestore.collection("posts").onSnapshot((snapshot) => {
-      let changes = snapshot.docChanges();
-      changes.forEach((change) => {
-        this.setState({ posts: [...this.state.posts, change.doc.data()] });
-      });
     });
   }
 
@@ -108,7 +104,7 @@ class App extends Component {
 
           <div className="SignIn">
             <Switch>
-              <Route exact path="/" component={SignIn}></Route>
+            <Route exact path="/" component={SignIn}></Route>
               <Route path="/signUp" component={SignUp}></Route>
             </Switch>
           </div>

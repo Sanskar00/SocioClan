@@ -23,7 +23,6 @@ const SignIn = () => {
   const login = async (event) => {
     event.preventDefault();
     const { user } = await auth.signInWithEmailAndPassword(email, password);//for signing with email and password
-    console.log(userCredentials)
     history.push('/')
   }
   const paperStyle = {

@@ -49,7 +49,7 @@ const UploadToDatabase = (props) => {
                     createdAt:createdAt
 
                 }]
-            }).then(window.location.reload)
+            }).then()
         }
       else{  userPosts.update({
             userPost: firebase.firestore.FieldValue.arrayUnion({
@@ -60,7 +60,7 @@ const UploadToDatabase = (props) => {
                 uid:uid,
                 createdAt:createdAt
             })
-        }).then()}
+        }).then(()=>{return window.location.reload})}
 
 
     }
