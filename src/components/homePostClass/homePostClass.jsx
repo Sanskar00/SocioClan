@@ -94,11 +94,11 @@ const HomePost = ({ currentUser, userPosts }) => {
                 avatar={
                     <Avatar src={avatar} />
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
+                // action={
+                //     <IconButton aria-label="settings">
+                //         <MoreVertIcon />
+                //     </IconButton>
+                // }
                 title={<Link to={`/${uid}`}>{displayName}</Link>}
             />{image ?
                 (<CardMedia

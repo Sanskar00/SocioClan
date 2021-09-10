@@ -69,9 +69,9 @@ class CommentDisplay extends Component {
                 {
                     this.state.userData.map(c => (
                         <div className={classes.comments}>
-                            {userData ? <Avatar className={classes.small} src={userData.avatar}></Avatar> : null}
+                            {userData ? <Avatar className={classes.small} src={c.data.avatar}></Avatar> : null}
                             {userData ? <Link to={`/${userData.uid}`}><span style={{ fontWeight: 'bold' }} onClick={this.handleClikDisplayName}>
-                                {c.displayName}</span>
+                                {c.data.displayName}</span>
                             </Link> : null}
                             <Typography style={{ marginLeft: '10px' }} variant="subtitle2" gutterBottom>
                                 {c.comment}
