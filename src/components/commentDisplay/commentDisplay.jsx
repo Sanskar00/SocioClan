@@ -47,7 +47,7 @@ class CommentDisplay extends Component {
                         const userRef = firestore.collection('users').doc(k.userUid)
                         const userSnapshot = await userRef.get()
                         const user = userSnapshot.data()
-                        this.setState({ userData: [...this.state.userData,{comment:k.comment,displayName:user.displayName}] })
+                        this.setState({ userData: [...this.state.userData,{comment:k.comment,data:user}] })
 
 
                     }

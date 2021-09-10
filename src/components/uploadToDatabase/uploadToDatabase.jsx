@@ -11,26 +11,41 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user-selector';
 import { connect } from 'react-redux';
 import { setUploadStatus } from '../../redux/profilePost/profilePost.action';
-const UploadToDatabase = (props) => {
-    const { filename, image, currentUser,setUploadStatus } = props
-    const { displayName, avatar, uid } = currentUser
-    console.log(filename)
-    console.log(image)
+import { useState } from 'react';
+const useStyles = ((theme) => ({
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.1)'
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        display: 'flex',
+        padding: theme.spacing(2, 4, 3),
+    },
+}))
 
-    function create_UUID(){
+const UploadToDatabase = (props) => {
+    const { filename, image, currentUser, setUploadStatus } = props
+    const { displayName, avatar, uid } = currentUser
+    const [open, setOpen] = useState(false);
+    function create_UUID() {
         var dt = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (dt + Math.random()*16)%16 | 0;
-            dt = Math.floor(dt/16);
-            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (dt + Math.random() * 16) % 16 | 0;
+            dt = Math.floor(dt / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
         return uuid;
     }
 
     console.log(create_UUID())
-    
 
-    const createdAt=new Date();
+
+    const createdAt = new Date();
 
     const onsubmit = async (e) => {
         e.preventDefault()
@@ -44,25 +59,28 @@ const UploadToDatabase = (props) => {
                     displayName: displayName,
                     image: image,
                     filename: filename,
-                    uuid:create_UUID(),
-                    uid:uid,
-                    createdAt:createdAt
+                    uuid: create_UUID(),
+                    uid: uid,
+                    createdAt: createdAt
 
                 }]
             }).then()
         }
-      else{  userPosts.update({
-            userPost: firebase.firestore.FieldValue.arrayUnion({
-                displayName: displayName,
-                image: image,
-                filename: filename,
-                uuid:create_UUID(),
-                uid:uid,
-                createdAt:createdAt
-            })
-        }).then(()=>{return window.location.reload})}
+
+        else {
+            userPosts.update({
+                userPost: firebase.firestore.FieldValue.arrayUnion({
+                    displayName: displayName,
+                    image: image,
+                    filename: filename,
+                    uuid: create_UUID(),
+                    uid: uid,
+                    createdAt: createdAt
+                })
+            }).then(setTimeout(() => { window.location.reload(); }, 100))
 
 
+        }
     }
     return (
 
@@ -79,14 +97,14 @@ const UploadToDatabase = (props) => {
             </div>
 
 
-        </div>)
-
+        </div>
+    )
 }
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser
 })
-const mapdispatchToProps=dispatch=>({
-    setUploadStatus:uplaod=>dispatch(setUploadStatus(uplaod))
+const mapdispatchToProps = dispatch => ({
+    setUploadStatus: uplaod => dispatch(setUploadStatus(uplaod))
 })
-export default connect(mapStateToProps,mapdispatchToProps)(UploadToDatabase)
+export default connect(mapStateToProps, mapdispatchToProps)(UploadToDatabase)

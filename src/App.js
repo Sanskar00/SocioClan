@@ -30,21 +30,19 @@ import Home from "./page/Home/home";
 import { setCurrentUser } from "./redux/user/user.action";
 import ProfilePage from "./page/ProfilePage/profilePage";
 import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "./redux/user/user-selector";
+import { selectCurrentUser,  } from "./redux/user/user-selector";
+import { selectLoadingStatus } from "./redux/user/user-selector";
 import { CircularProgress } from "@material-ui/core";
 import { withTheme } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import { classes } from "istanbul-lib-coverage";
+import { setLoading } from "./redux/user/user.action";
 
 const useStyles = (theme) => ({
-  root: {
-    diplay: 'flex',
-
-  },
   spinner: {
-    top: '50%',
-    bottom: '50%',
-    postion: 'fixed'
+      marginTop:'22.5%',
+      marginLeft:'50%'
+
   }
 })
 class App extends Component {
@@ -78,7 +76,7 @@ class App extends Component {
   // fetching post from firestore data base
 
   render() {
-    const { currentUser } = this.props
+    const { currentUser,loading,setLoading } = this.props
     const { classes } = this.props
     if (currentUser) {
       return (
@@ -99,12 +97,17 @@ class App extends Component {
       )
     }
     else if (!currentUser) {
+      setTimeout(()=>{
+        setLoading(true)
+      },3000)
+
       return (
         <Router>
 
           <div className="SignIn">
             <Switch>
-            <Route exact path="/" component={SignIn}></Route>
+              {!loading && <CircularProgress className={classes.spinner}/>}
+            {<Route exact path="/" component={SignIn}></Route>}
               <Route path="/signUp" component={SignUp}></Route>
             </Switch>
           </div>
@@ -116,9 +119,12 @@ class App extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  setLoading:(loading)=>dispatch(setLoading(loading)),
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+const mapStateToProps = ({user})=>({
+  currentUser: user.currentUser,
+  loading:user.loading
+
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles, { withTheme: true })(App))
