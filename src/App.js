@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop:'22.5%',
       marginLeft:'50%',
       [theme.breakpoints.down('sm')]:{
-        marginTop:'60%',
+        marginTop:'65%',
         marginLeft:'45%'
     }
 
