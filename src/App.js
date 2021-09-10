@@ -37,28 +37,25 @@ import { withTheme } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import { classes } from "istanbul-lib-coverage";
 import { setLoading } from "./redux/user/user.action";
+import { makeStyles } from "@material-ui/core";
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   spinner: {
       marginTop:'22.5%',
-      marginLeft:'50%'
+      marginLeft:'50%',
+      [theme.breakpoints.down('sm')]:{
+        marginTop:'60%',
+        marginLeft:'45%'
+    }
+
 
   }
-})
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      img: "",
-      posts: [],
-      files: {},
-      loading:true
-    };
-  }
+}))
+const App=(props)=>{
+const {currentUser,loading,setLoading,setCurrentUser}=props
+const classes=useStyles()
 
-
-  componentDidMount() {
-    const { setCurrentUser } = this.props;
+  useEffect(()=>{
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         const userRef = await createUserProfileDocument(user);
@@ -67,17 +64,12 @@ class App extends Component {
             id: snapshot.id,
             ...snapshot.data(),
           });
-          this.setState({loading:false});
         });
       }
     });
-  }
+  },[])
 
   // fetching post from firestore data base
-
-  render() {
-    const { currentUser,loading,setLoading } = this.props
-    const { classes } = this.props
     if (currentUser) {
       return (
         <Router>
@@ -116,7 +108,6 @@ class App extends Component {
       )
     }
   }
-}
 
 const mapDispatchToProps = (dispatch) => ({
   setLoading:(loading)=>dispatch(setLoading(loading)),
@@ -127,4 +118,4 @@ const mapStateToProps = ({user})=>({
   loading:user.loading
 
 })
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles, { withTheme: true })(App))
+export default connect(mapStateToProps, mapDispatchToProps)(App)
