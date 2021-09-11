@@ -21,6 +21,13 @@ const useStyles = (theme) => ({
         flexWrap: 'wrap',
 
     },
+    comment:{
+        display:'flex',
+        marginLeft:'5px',
+        marginTop:'5.5px',
+        align:'center'
+
+    }
 });
 class CommentDisplay extends Component {
     constructor() {
@@ -73,7 +80,7 @@ class CommentDisplay extends Component {
                             {userData ? <Link to={`/${userData.uid}`}><span style={{ fontWeight: 'bold' }} onClick={this.handleClikDisplayName}>
                                 {c.data.displayName}</span>
                             </Link> : null}
-                            <Typography style={{ marginLeft: '10px' }} variant="subtitle2" gutterBottom>
+                            <Typography className={classes.comment} variant="subtitle2" gutterBottom>
                                 {c.comment}
                             </Typography>
                         </div>

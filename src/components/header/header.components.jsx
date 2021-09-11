@@ -16,10 +16,10 @@ import { connect } from "react-redux";
 import { Avatar, Grid, Paper } from "@material-ui/core";
 import SimpleMenu from "../menu/menu";
 import { setMenuStaus } from "../../redux/user/user.action";
+import { setUploadStatus } from "../../redux/profilePost/profilePost.action";
 
 
-
-const Header = ({currentUser,setMenuStaus}) => {
+const Header = ({currentUser,setMenuStaus,setUploadStatus}) => {
   const [filesName, setFile] = useState("");
   const [img, setImage] = useState("");
   const [hidden, setHidden] = useState(true);
@@ -39,7 +39,8 @@ const Header = ({currentUser,setMenuStaus}) => {
     await fileRef.put(file); //putting file in  file ref or in filename document
     setImage(await fileRef.getDownloadURL());
     setFile(file.name);
-    setHidden((hidden) => (hidden = !hidden));
+    setUploadStatus(true);
+    
   };
 
  
@@ -70,7 +71,7 @@ const Header = ({currentUser,setMenuStaus}) => {
           ></input>
         </form>
 
-        {hidden ? null : <UploadToDatabase image={img} filename={filesName} />}
+        <UploadToDatabase image={img} filename={filesName} />
 
         {
           currentUser?currentUser.avatar?
@@ -95,6 +96,8 @@ const mapStateToProps=createStructuredSelector({
   currentUser:selectCurrentUser
 })
 const mapdispatchToProps=dispatch=>({
-  setMenuStaus:menu=>dispatch((setMenuStaus(menu)))
+  setMenuStaus:menu=>dispatch((setMenuStaus(menu))),
+  setUploadStatus:upload=>dispatch(setUploadStatus(upload))
+
 })
 export default connect(mapStateToProps,mapdispatchToProps)(Header);

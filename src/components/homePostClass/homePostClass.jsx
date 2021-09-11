@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "30px",
         width: '20px',
         display: 'flex',
-        justifyContent: 'space-between'
+        // justifyContent: 'space-between'
     },
     small: {
         width: '25px',

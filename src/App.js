@@ -46,7 +46,12 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down('sm')]:{
         marginTop:'65%',
         marginLeft:'45%'
-    }
+    },
+    [theme.breakpoints.down('xsm')]:{
+      marginTop:'65%',
+      marginLeft:'45%'
+  }
+
 
 
   }
@@ -91,7 +96,7 @@ const classes=useStyles()
     else if (!currentUser) {
       setTimeout(()=>{
         setLoading(true)
-      },3000)
+      },4000)
 
       return (
         <Router>
