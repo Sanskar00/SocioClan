@@ -18,21 +18,22 @@ import { selectCurrentUser } from '../../redux/user/user-selector';
 import { useState } from 'react';
 import { Box, InputAdornment } from '@material-ui/core';
 import CommentBox from '../commentBox/commentBox';
-import { ChatBubbleOutlined } from '@material-ui/icons';
+import { ChatBubbleOutlined, GridOff } from '@material-ui/icons';
 import CommentDisplay from '../commentDisplay/commentDisplay'
 import { Link } from 'react-router-dom';
 import LikeDisplay from '../likeDisplay/likeDisplay';
 import LikeCountDisplay from '../likeCountDisplay/likeCountDisplay';
 import { Skeleton } from '@material-ui/lab';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '75%',
         marginLeft: '12.5%',
-       [theme.breakpoints.down('sm')]:{
-           width:"100%",
-           margin:'0'
-       }
+        [theme.breakpoints.down('sm')]: {
+            width: "100%",
+            margin: '0'
+        }
     },
     media: {
         height: 0,
@@ -75,8 +76,12 @@ const useStyles = makeStyles((theme) => ({
     spanLike: {
         marginLeft: '3px'
     },
-    commentsField:{
-        margin:theme.spacing(1)
+    commentsField: {
+        margin: theme.spacing(1)
+    },
+    descriptionGrid: {
+        display: 'flex',
+        margin:'10px 15px',
     }
 }));
 
@@ -85,9 +90,9 @@ const HomePost = ({ currentUser, userPosts }) => {
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
-    const classes=useStyles()
+    const classes = useStyles()
 
-    const { displayName, avatar, image, uuid, uid } = userPosts
+    const { displayName, avatar, image, uuid, uid, description } = userPosts
     return (
         <Card className={classes.root} elevation={2} >
             <CardHeader
@@ -124,9 +129,16 @@ const HomePost = ({ currentUser, userPosts }) => {
                     <ChatBubbleOutlined />
                 </IconButton>
             </CardActions>
+
             <Box className={classes.likeNo}>
                 <LikeCountDisplay uuid={uuid} ></LikeCountDisplay>
             </Box>
+            <Grid className={classes.descriptionGrid}>
+                <Avatar src={avatar} className={classes.small} />
+                <Typography variant="subtitle2" display='inline ' style={{marginTop:'2px'}}>
+                    <b>{displayName}</b> {description}
+                </Typography>
+            </Grid>
 
             <CardContent>
                 <CommentBox uuid={uuid} className={classes.commentsField}></CommentBox>

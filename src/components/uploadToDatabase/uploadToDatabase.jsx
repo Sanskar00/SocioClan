@@ -51,8 +51,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         marginLeft:'20%',
-        marginTop:'5%'
+        marginTop:'5%',
 
+    },
+    button:{
+        margin:'5px 5px'
     },
   description:{
       padding:'5px',
@@ -64,6 +67,7 @@ const UploadToDatabase = (props) => {
     const { filename, image, currentUser, setUploadStatus, uploadStatus } = props
     const { displayName, avatar, uid } = currentUser
     const [open, setOpen] = useState(false);
+    const [description,setDescription]=useState('');
     function create_UUID() {
         var dt = new Date().getTime();
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -78,6 +82,10 @@ const UploadToDatabase = (props) => {
 
 
     const createdAt = new Date();
+    const handleChange=(event)=>{
+        setDescription(event.target.value)
+        console.log(description)
+    }
 
 
     const onsubmit = async (e) => {
@@ -108,9 +116,10 @@ const UploadToDatabase = (props) => {
                     filename: filename,
                     uuid: create_UUID(),
                     uid: uid,
-                    createdAt: createdAt
+                    createdAt: createdAt,
+                    description:description
                 })
-            }).then(setTimeout(() => { window.location.reload(); }, 200))
+            }).then(setTimeout(() => { window.location.reload(); }, 500))
 
 
         }
@@ -135,17 +144,18 @@ const UploadToDatabase = (props) => {
                 }}
             >
                 <Fade in={uploadStatus}>
-                    <div className={classes.paper}>
+                    <div className={'paper'}>
                         <div className={classes.imgDis}>
                             <TextField
                                 id="outlined-secondary"
                                 placeholder='Add post description'
                                 variant="outlined"
-                                color="secondary"
+                                color="default"
                                 fullWidth
                                 className={classes.description}
                                 rows={10}
                                 multiline
+                                onChange={handleChange}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -159,8 +169,8 @@ const UploadToDatabase = (props) => {
 
                         <form onSubmit={onsubmit} className={classes.form} >
                             <div className={classes.buttons}>
-                                <Button variant='contained' color='primary' type='submit'>Upload</Button>
-                                <Button variant='contained' onClick={closeModal} >Cancel</Button>
+                                <Button variant='contained' color='primary' type='submit' className={classes.button}>Upload</Button>
+                                <Button variant='contained' onClick={closeModal} className={classes.button}>Cancel</Button>
                             </div>
 
 

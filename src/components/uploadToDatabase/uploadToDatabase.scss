@@ -1,48 +1,63 @@
-.uploadPopUp{
-    margin: auto 20px;
-    position: fixed;
-    margin: auto;
-    width: 25%;
-    height: 50%;
-    top:30px;
-    display:flex;
-    align-items:center;
-    pointer-events: auto;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
-    @media (max-width:800px) {
-        margin: 5px;
-        position: relative;
-        width: 25%;
-        height: 50%;
-    }
-    .imageDiv{
+// .uploadPopUp{
+//     margin: auto 20px;
+//     position: fixed;
+//     margin: auto;
+//     width: 25%;
+//     height: 50%;
+//     top:30px;
+//     display:flex;
+//     align-items:center;
+//     pointer-events: auto;
+//     overflow: auto;
+//     background-color: rgba(0,0,0,0.5);
+//     @media (max-width:800px) {
+//         margin: 5px;
+//         position: relative;
+//         width: 25%;
+//         height: 50%;
+//     }
+//     .imageDiv{
     
-        margin-bottom: auto;
-        display: flex;
-        justify-content: flex-start;
+//         margin-bottom: auto;
+//         display: flex;
+//         justify-content: flex-start;
 
-        .postImage{
-            margin-bottom: auto 1px;
-            width: 12.5%;
-            height: 12.5%;
-            padding: 10px;
-            @media (max-width) {
-                width: 100px;
-                height: 100px;
-                padding: 5px;
-            }
-        }
+//         .postImage{
+//             margin-bottom: auto 1px;
+//             width: 12.5%;
+//             height: 12.5%;
+//             padding: 10px;
+//             @media (max-width) {
+//                 width: 100px;
+//                 height: 100px;
+//                 padding: 5px;
+//             }
+//         }
         
 
-    }
+//     }
     
-    .formUploader{
-            margin-left: auto;
-            margin-top: auto;
-            padding-right: 2rem;
-            display: flex;
-            justify-content: space-between;
-    }
+//     .formUploader{
+//             margin-left: auto;
+//             margin-top: auto;
+//             padding-right: 2rem;
+//             display: flex;
+//             justify-content: space-between;
+//     }
    
+// }
+.paper{
+    background-color: white;
+    width: 35%;
+    height: 35%;
+    border-radius:'2px' ;
+    @media (min-width:1300px) {
+        height: 45%;
+    }
+    @media (max-width:800px) {
+        height: 50%;
+        width:100%;
+        border-radius:'2px' ;
+    }
+
 }
