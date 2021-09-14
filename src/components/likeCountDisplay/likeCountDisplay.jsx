@@ -2,15 +2,15 @@ import createTypography from '@material-ui/core/styles/createTypography';
 import React from 'react';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import LikeCommentHover from '../likeCommentHover/likeCommentHover';
 import { useState } from 'react';
 import { firestore } from '../../firebase/firebase';
-import { selectCurrentUser } from '../../redux/user/user-selector';
-import { selectModalStatus } from '../../redux/profilePost/profile-selctor';
+import { setLikeModalStatus } from '../../redux/profilePost/profilePost.action';
+import { setPostUuid } from '../../redux/profilePost/profilePost.action';
 
 
-const LikeCount=({currentUser,uuid,like})=>{
+
+const LikeCount=(props)=>{
+    const {currentUser,uuid,like,setLikeModalStatus,setPostUuid}=props
     const [likeCount,setlikeCount]=useState(0)
     const getUserLike = async () => {
         const likesDoc = firestore.collection('likes').doc(uuid)
@@ -19,13 +19,20 @@ const LikeCount=({currentUser,uuid,like})=>{
             setlikeCount(likesSnapshot.data().userLikes.length)
         }
     }
+    const modalHandler=()=>{
+        setLikeModalStatus(true)
+        setPostUuid(uuid);
+    }
     useEffect(() => {
         getUserLike()
     }, [like])
     
     return(
+        <div>
+            {(likeCount)?(likeCount==1)?<span onClick={modalHandler} style={{cursor:'pointer'}} >{likeCount}<span style={{marginLeft:'3px',}}>like</span></span>
+        :<span onClick={modalHandler} style={{cursor:'pointer'}} >{likeCount}<span style={{marginLeft:'3px'}}>likes</span></span>:null}
+        </div>
         
-        (likeCount)?(likeCount==1)?<span >{likeCount}<span style={{marginLeft:'3px'}}>like</span></span>:<span >{likeCount}<span style={{marginLeft:'3px'}}>likes</span></span>:null
 
             
      
@@ -35,4 +42,9 @@ const mapStateToProps=({user,profilePost})=>({
     currentUser:user.currentUser,
     like:profilePost.like
 })
-export default connect(mapStateToProps)(LikeCount)
+const mapdispatchToProps=dispatch=>({
+    setLikeModalStatus:like=>dispatch(setLikeModalStatus(like)),
+    setPostUuid:uuid=>dispatch(setPostUuid(uuid))
+    
+})
+export default connect(mapStateToProps,mapdispatchToProps)(LikeCount)

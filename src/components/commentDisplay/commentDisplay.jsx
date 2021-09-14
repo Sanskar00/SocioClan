@@ -9,11 +9,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { setModalStatus } from '../../redux/profilePost/profilePost.action';
 import { connect } from 'react-redux';
-
+import { CardHeader } from '@material-ui/core';
 const useStyles = (theme) => ({
     small: {
-        width: '25px',
-        height: '25px',
+        width: '30px',
+        height: '30px',
     },
     comments: {
         display: 'flex',
@@ -21,11 +21,10 @@ const useStyles = (theme) => ({
         flexWrap: 'wrap',
 
     },
-    comment:{
-        display:'flex',
-        marginLeft:'5px',
-        marginTop:'5.5px',
-        align:'center'
+    comment: {
+        display: 'flex',
+        marginTop: '5.5px',
+        marginLeft:'5px'
 
     }
 });
@@ -49,12 +48,12 @@ class CommentDisplay extends Component {
             if (commentSnapshot.exists) {
                 const userCommentsArray = commentSnapshot.data().userComments
                 userCommentsArray.map(k => {
-                      const getUser = async () => {
+                    const getUser = async () => {
 
                         const userRef = firestore.collection('users').doc(k.userUid)
                         const userSnapshot = await userRef.get()
                         const user = userSnapshot.data()
-                        this.setState({ userData: [...this.state.userData,{comment:k.comment,data:user}] })
+                        this.setState({ userData: [...this.state.userData, { comment: k.comment, data: user }] })
 
 
                     }
@@ -76,13 +75,20 @@ class CommentDisplay extends Component {
                 {
                     this.state.userData.map(c => (
                         <div className={classes.comments}>
-                            {userData ? <Avatar className={classes.small} src={c.data.avatar}></Avatar> : null}
-                            {userData ? <Link to={`/${userData.uid}`}><span style={{ fontWeight: 'bold' }} onClick={this.handleClikDisplayName}>
-                                {c.data.displayName}</span>
-                            </Link> : null}
-                            <Typography className={classes.comment} variant="subtitle2" gutterBottom>
+                            <CardHeader
+                                avatar={
+                                    <Avatar
+                                        className={classes.small}
+                                        alt="Remy Sharp"
+                                        src={c.data.avatar}
+                                    />
+                                }
+                                title={<Link to={`/${c.data.uid}`} style={{ fontWeight: 'bold',}} onClick={this.handleClikDisplayName}>{c.data.userName}</Link>}
+                            />
+                            <Typography  variant="subtitle2" gutterBottom>
                                 {c.comment}
                             </Typography>
+
                         </div>
 
 
@@ -112,3 +118,10 @@ export default connect(null, mapdispatchToProps)(withStyles(useStyles, { withThe
 //     this.setState({userData:userData})
 // }
 // getUser()
+// {userData ? <Avatar className={classes.small} src={c.data.avatar}></Avatar> : null}
+//                             {userData ? <Link to={`/${c.data.uid}`}><span style={{ fontWeight: 'bold' }} onClick={this.handleClikDisplayName}>
+//                                 {c.data.displayName}</span>
+//                             </Link> : null}
+//                             <Typography className={classes.comment} variant="subtitle2" gutterBottom>
+//                                 {c.comment}
+//                             </Typography>

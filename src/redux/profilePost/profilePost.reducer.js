@@ -4,7 +4,8 @@ const INTIAL_STATE = {
     postImage:null,
     postUuid:null,
     like:null,
-    uploadStatus:false
+    uploadStatus:false,
+    likeModalStatus:false
 }
 const profilePostReducer=(state = INTIAL_STATE, action) => {
     switch (action.type) {
@@ -33,6 +34,11 @@ const profilePostReducer=(state = INTIAL_STATE, action) => {
                 ...state,
                 uploadStatus:action.payload
 
+            }
+        case ProfilePostTypes.LIKE_MODAL_STATUS:
+            return{
+                ...state,
+                likeModalStatus:action.payload
             }
         default:
             return state;

@@ -6,6 +6,7 @@ import RecipeReviewCard from '../homePost/homePost';
 import HomePost from '../homePostClass/homePostClass';
 import './homeContainer.scss'
 
+
 export default function SimpleContainer({posts}) {
   return (
     <React.Fragment>
@@ -14,7 +15,11 @@ export default function SimpleContainer({posts}) {
           {
               posts.map(post=>(
                 // <HomePosts userPosts={post}></HomePosts>
-                <HomePost userPosts={post} key={post.uuid}></HomePost>
+                <div>
+                    <HomePost userPosts={post} key={post.uuid}></HomePost>
+                   
+                </div>
+              
               ))
           }
         

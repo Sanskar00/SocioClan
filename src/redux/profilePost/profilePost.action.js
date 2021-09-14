@@ -17,7 +17,13 @@ export const setLikeStatus=like=>({
     type:ProfilePostTypes.SET_LIKE_STATUS,
     payload:like
 })
+
 export const setUploadStatus=upload=>({
     type:ProfilePostTypes.SET_UPLOAD_STATUS,
     payload:upload
+})
+
+export const setLikeModalStatus=like=>({
+    type:ProfilePostTypes.LIKE_MODAL_STATUS,
+    payload:like
 })

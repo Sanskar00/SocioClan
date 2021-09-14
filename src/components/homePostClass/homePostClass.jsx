@@ -25,7 +25,9 @@ import LikeDisplay from '../likeDisplay/likeDisplay';
 import LikeCountDisplay from '../likeCountDisplay/likeCountDisplay';
 import { Skeleton } from '@material-ui/lab';
 import { Grid } from '@material-ui/core';
-
+import { DeleteSharp } from '@material-ui/icons';
+import { firestore } from '../../firebase/firebase';
+import firebase from 'firebase';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '75%',
@@ -91,19 +93,36 @@ const HomePost = ({ currentUser, userPosts }) => {
         setExpanded(!expanded)
     }
     const classes = useStyles()
-
     const { displayName, avatar, image, uuid, uid, description } = userPosts
+    const deletePost=async()=>{
+        const postDoc=firestore.collection('posts').doc(uid);
+        const postSnapshot=await postDoc.get();
+        const userPostArray=postSnapshot.data().userPost
+        if(postSnapshot.exists){
+            userPostArray.map(post=>{
+                if(post.uuid==uuid){
+                    postDoc.update({
+                        userPost:firebase.firestore.FieldValue.arrayRemove(post)
+                      }).then(setTimeout(() => { window.location.reload(); }, 500))
+                }
+            })
+        }
+
+    }
+
+    
     return (
         <Card className={classes.root} elevation={2} >
             <CardHeader
                 avatar={
                     <Avatar src={avatar} />
                 }
-                // action={
-                //     <IconButton aria-label="settings">
-                //         <MoreVertIcon />
-                //     </IconButton>
-                // }
+                action={
+                    (currentUser.uid==uid)?
+                    <IconButton aria-label="settings">
+                        <DeleteSharp onClick={deletePost}/>
+                    </IconButton>:null
+                }
                 title={<Link to={`/${uid}`}>{displayName}</Link>}
             />{image ?
                 (<CardMedia
@@ -133,12 +152,12 @@ const HomePost = ({ currentUser, userPosts }) => {
             <Box className={classes.likeNo}>
                 <LikeCountDisplay uuid={uuid} ></LikeCountDisplay>
             </Box>
-            <Grid className={classes.descriptionGrid}>
+            {(!description)?null:<Grid className={classes.descriptionGrid}>
                 <Avatar src={avatar} className={classes.small} />
                 <Typography variant="subtitle2" display='inline ' style={{marginTop:'2px'}}>
                     <b>{displayName}</b> {description}
                 </Typography>
-            </Grid>
+            </Grid>}
 
             <CardContent>
                 <CommentBox uuid={uuid} className={classes.commentsField}></CommentBox>

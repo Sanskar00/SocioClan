@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import SimpleContainer from '../../components/homeContainer/homeContainer';
 import { firestore } from '../../firebase/firebase';
 import { getPost } from '../../firebase/firebase';
+import LikeModal from '../../components/likeModal/likeModal';
 
 class Home extends Component {
     constructor() {
@@ -30,6 +31,7 @@ class Home extends Component {
         return (
             <div>
                <SimpleContainer posts={this.state.allPosts}/>
+               <LikeModal></LikeModal>
             </div>
         )
     }
