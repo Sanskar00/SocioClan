@@ -102,8 +102,8 @@ const UploadToDatabase = (props) => {
                     filename: filename,
                     uuid: create_UUID(),
                     uid: uid,
-                    createdAt: createdAt
-
+                    createdAt: createdAt,
+                    description:description
                 }]
             }).then(setTimeout(() => { window.location.reload(); }, 1000))
         }
