@@ -98,15 +98,21 @@ const HomePost = ({ currentUser, userPosts }) => {
         const postDoc=firestore.collection('posts').doc(uid);
         const postSnapshot=await postDoc.get();
         const userPostArray=postSnapshot.data().userPost
+        const likesDoc=firestore.collection('likes').doc(uuid)
+        const commentsDoc=firestore.collection('comments').doc(uuid)
+       
         if(postSnapshot.exists){
             userPostArray.map(post=>{
                 if(post.uuid==uuid){
+                    likesDoc.delete()
+                    commentsDoc.delete()
                     postDoc.update({
                         userPost:firebase.firestore.FieldValue.arrayRemove(post)
-                      }).then(setTimeout(() => { window.location.reload(); }, 500))
+                      }).then(setTimeout(() => { window.location.reload();}, 500))
                 }
             })
         }
+
 
     }
 
@@ -168,6 +174,7 @@ const HomePost = ({ currentUser, userPosts }) => {
                 <CommentDisplay key={uuid} uuid={uuid}></CommentDisplay>
 
             </Collapse>
+            
         </Card>
     )
 }
