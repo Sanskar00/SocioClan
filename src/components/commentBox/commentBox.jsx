@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { setCurrentUser } from '../../redux/user/user.action';
 import firebase from 'firebase';
 import { Component } from 'react';
+import { createRef } from 'react';
 const useStyles = makeStyles((theme) => ({
     small: {
         width: theme.spacing(3),
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto"
     }
 }));
-
+const myComment=createRef()
 const CommentBox = ({ currentUser, uuid }) => {
     const classes = useStyles();
 
@@ -36,6 +37,7 @@ const CommentBox = ({ currentUser, uuid }) => {
     const submitComment = async(event) => {
         const commentRef = firestore.collection('comments').doc(uuid)
         const commentSnapshot = await commentRef.get()
+        document.getElementById("filled-full-width").value=""
         if (!commentSnapshot.exists) {
             commentRef.set({
                 userComments: [{
@@ -63,7 +65,7 @@ const CommentBox = ({ currentUser, uuid }) => {
             <TextField
                 id="filled-full-width"
                 multiline
-                
+                ref={myComment}
                 placeholder="Add a comment..."
                 fullWidth
                 onChange={onCommentChange}
