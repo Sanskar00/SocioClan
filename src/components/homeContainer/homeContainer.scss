@@ -1,5 +1,7 @@
 .container{
     width: 50%;
+    height: 0;
+    padding-bottom:calc(50%*9/16) ;
     @media(max-width:800px){
         width: 100%;
     }

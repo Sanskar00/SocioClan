@@ -27,3 +27,9 @@ export const setLikeModalStatus=like=>({
     type:ProfilePostTypes.LIKE_MODAL_STATUS,
     payload:like
 })
+
+export const setDeleteModalStatus=deleteStatus=>({
+    type:ProfilePostTypes.DELETE_MODAL_STATUS,
+    payload:deleteStatus
+})
+

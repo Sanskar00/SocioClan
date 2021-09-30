@@ -50,31 +50,42 @@ const ProfilePosts=({ profilePosts,modalStatus,setModalStatus})=> {
 
   // }
     return (
-        <div >
+        // <div >
 
-            <Grid className='postItem' align='center' >
-              {
-                profilePosts.map(post=>(
-                  <div className='postContainer'>
-                     <div key={post.uuid} className='imgWrap'>
-                    {/* <img src={post.image} className='image' onClick={handleOpen} alt={post.uuid}></img> */}
-                    <Grid >
-                      <PostImage post={post} ></PostImage>
-                      <LikeCommentHover post={post} className='likeComments'></LikeCommentHover>
-                    </Grid>
+        //     <Grid className='postItem'  >
+        //       {
+        //         profilePosts.map(post=>(
+        //           <div className='postContainer'>
+        //              <div key={post.uuid} className='imgWrap'>
+        //             {/* <img src={post.image} className='image' onClick={handleOpen} alt={post.uuid}></img> */}
+        //             <Grid >
+        //               <PostImage post={post} ></PostImage>
+        //               <LikeCommentHover post={post} className='likeComments'></LikeCommentHover>
+        //             </Grid>
                     
                    
 
                    
-                  </div>
-                  </div>
+        //           </div>
+        //           </div>
                  
                   
-                ))
-              }
-            </Grid>
+        //         ))
+        //       }
+        //     </Grid>
 
   
+        // </div>
+        <div className="postContainer">
+          {
+            profilePosts.map(post=>(
+              <div>
+                <PostImage key={post.uuid} post={post} ></PostImage>
+              </div>
+              
+            ))
+          }
+
         </div>
     );
 }

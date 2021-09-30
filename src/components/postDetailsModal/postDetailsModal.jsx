@@ -52,7 +52,6 @@ const useStyles = ((theme) => ({
 
     width: '300px',
     height: 'auto',
-    flexDirection: 'coloumn'
   },
   profileDetails: {
 
@@ -128,7 +127,9 @@ class PostDetailsModal extends Component {
                   {profileDetails ? <span className='displayName'>{profileDetails.displayName}</span> : null}
 
                 </div>
+                <div className='commentDisplay'>
                 <CommentDisplay uuid={uuid}></CommentDisplay>
+                </div>
                 <Box className='likeCommentsDetails'>
                   <div className='likeCommentButtons' >
                     <IconButton aria-label="add to favorites">

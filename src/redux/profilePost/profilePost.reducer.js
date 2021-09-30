@@ -5,7 +5,8 @@ const INTIAL_STATE = {
     postUuid:null,
     like:null,
     uploadStatus:false,
-    likeModalStatus:false
+    likeModalStatus:false,
+    deleteModalStatus:false
 }
 const profilePostReducer=(state = INTIAL_STATE, action) => {
     switch (action.type) {

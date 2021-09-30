@@ -1,31 +1,29 @@
-.postItem{
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    margin-left: 5px;
-    .imgWrap{
-        position: relative;
-        .likeComments{
-            width:80%;
-            position: absolute;
-            top:150px;
-            display: none;
-            margin-left: 100px;
-            font-weight: bolder;
-            @media(max-width:800px){
-                top: 75px;
-                margin-left: 50px;
-            }
+.postContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+//     .imgWrap{
+//         display: grid;
+//         .likeComments{
+//             width:80%;
+//             position: absolute;
+//             display: none;
+//             margin-left: 100px;
+//             font-weight: bolder;
+//             @media(max-width:800px){
+//                 top: 75px;
+//                 margin-left: 50px;
+//             }
     
     
-            /* transition effect. not necessary */
-            transition: opacity .2s, visibility .2s;
-        }
-        &:hover{
-            .likeComments{
-              display: flex;
-            }
-    }
-}
+//             /* transition effect. not necessary */
+//             transition: opacity .2s, visibility .2s;
+//         }
+//         &:hover{
+//             .likeComments{
+//               display: flex;
+//             }
+//     }
+// }
     
 }
